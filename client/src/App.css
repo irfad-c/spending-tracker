@@ -1,0 +1,90 @@
+.entire-content {
+  max-width: 400px;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.balance {
+  margin-bottom: 20px;
+}
+
+.income-expense {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.income {
+  text-align: center;
+}
+
+.income-p {
+  color: green;
+}
+
+.expense {
+  text-align: center;
+}
+
+.expense-p {
+  color: red;
+}
+
+/* Add Transaction Section */
+.add-expense,
+.add-income {
+  margin-top: 20px;
+}
+
+.add-expense form,
+.add-income form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Inputs */
+.input-box {
+  width: 100%;
+  padding: 8px;
+  /*By using box-sizing: border-box, the padding is counted inside the 100% width, so the input fits neatly.*/
+  box-sizing: border-box;
+}
+
+/* Buttons */
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  font-weight: bold;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Category Lists */
+.category-lists {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.category-lists ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 180px;
+}
+
+/* Chrome, Safari, Edge, Opera - remove number spinners */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
