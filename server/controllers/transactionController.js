@@ -1,11 +1,10 @@
-import Transaction from "../models/Transaction.js";
+import Transaction from "../models/transaction.js";
 
 // @desc    Add new transaction
 // @route   POST /api/transactions
 export const addTransaction = async (req, res) => {
   try {
     const { type, category, amount, description } = req.body;
-
     if (!type || !category || !amount) {
       //400-bad request
       //sends a JSON-formatted response to the client.
@@ -46,8 +45,7 @@ export const getTransactions = async (req, res) => {
 // @route   GET /api/transactions/summary
 export const getSummary = async (req, res) => {
   try {
-
-//transactions contain multiple objects    
+    //transactions contain multiple objects
     const transactions = await Transaction.find();
     const income = transactions
       .filter((t) => t.type === "income")

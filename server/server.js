@@ -21,6 +21,26 @@ app.get("/", (req, res) => {
   res.send("Spending Tracker API is running...");
 });
 
+let transactionsIrfad = [
+  { id: 1, text: "Salary", amount: 5000 },
+  { id: 2, text: "Groceries", amount: -1500 },
+];
+
+app.get("/api/transactions/irfad", (req, res) => {
+  res.json(transactionsIrfad);
+});
+
+// POST new transaction
+app.post("/api/transactions/irfad", (req, res) => {
+  const newTransaction = {
+    id: transactionsIrfad.length + 1,
+    text: req.body.text,
+    amount: req.body.amount,
+  };
+  transactionsIrfad.push(newTransaction);
+  res.status(201).json(newTransaction);
+});
+
 //For any request starting with /api/transactions, use the routes I defined in transactionRoutes.
 app.use("/api/transactions", transactionRoutes);
 

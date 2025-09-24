@@ -1,7 +1,10 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
+  const [transactions, setTransactions] = useState([]);
+  const [text, setText] = useState("");
+  const [amount, setAmount] = useState("");
   //Used when you want to store numeric values (e.g., counters, scores, prices).
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
@@ -18,6 +21,35 @@ function App() {
   const [expenseCategories, setExpenseCategories] = useState({});
 
   const balance = income - expense;
+
+  // GET request
+  /*This will run after react first renders.Here we used dependency array.So it only runs once when the component mounts*/
+  useEffect(() => {
+    /*Here we didnt specify the method,so this will run GET */
+    fetch("http://localhost:5000/api/transactions/irfad")
+      //here backend will send data to us.Then we convert that response to json format.
+      .then((res) => res.json())
+      //after converting data in the json format we are using this data.
+      //here below code is wrong.Becuase in backedn we get transaction history.not income category
+      .then((data) => setTransactions(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  // POST request - add new transaction
+  function addTransaction(e) {
+    e.preventDefault();
+    fetch("http://localhost:5000/api/transactions/irfad", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text, amount: Number(amount) }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTransactions((prev) => [...prev, data]); // update UI
+        setText(""); // clear form
+        setAmount("");
+      });
+  }
 
   // Add income
   const handleIncomeSubmit = (e) => {
@@ -118,7 +150,11 @@ amt = amount (e.g., 5000) */}
           <select
             className="input-box"
             value={incomeCategory}
-            //setIncomeCategory(...) updates the state so React knows which option is chosen.
+            //setIncomeCategory(...) updates the state so React knows which option is chosen
+            /*e → The event object (short for "event").
+target → The element that triggered the event (for example, an <input>, <textarea>, <select>, etc.).
+value → The current value of that element.
+e.target.value lets you capture what the user typed or selected inside a form element. */
             onChange={(e) => setIncomeCategory(e.target.value)}
           >
             <option value="">-- Select Category --</option>
@@ -167,6 +203,31 @@ amt = amount (e.g., 5000) */}
           </button>
         </form>
       </div>
+      <br></br>
+      <form onSubmit={addTransaction}>
+        <input
+          type="text"
+          placeholder="Enter description"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Enter amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+        />
+        <button type="submit">Add Transaction</button>
+      </form>
+
+      <h2>Transactions</h2>
+      <ul>
+        {transactions.map((t) => (
+          <li key={t.id}>
+            {t.text}: {t.amount}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
