@@ -30,17 +30,7 @@ function App() {
       .catch((err) => console.error(err));
   }, []);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/api/income/category")
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = data.sort((a, b) => b.total - a.total);
-        setIncomeByCategory(sorted);
-      })
-      .catch((err) => console.error(err));
-  }, []);
-
-  useEffect(() => {
+  const fetchExpenseByCategory = () => {
     fetch("http://localhost:5000/api/expense/category")
       .then((res) => res.json())
       .then((data) => {
@@ -49,6 +39,23 @@ function App() {
         console.log(sorted);
       })
       .catch((err) => console.error(err));
+  };
+  useEffect(() => {
+    fetchExpenseByCategory();
+  }, []);
+
+  const fetchIncomeByCategory = () => {
+    fetch("http://localhost:5000/api/income/category")
+      .then((res) => res.json())
+      .then((data) => {
+        const sorted = data.sort((a, b) => b.total - a.total);
+        setIncomeByCategory(sorted);
+        console.log(sorted);
+      })
+      .catch((err) => console.error(err));
+  };
+  useEffect(() => {
+    fetchIncomeByCategory();
   }, []);
 
   function addIncome(e) {
@@ -70,6 +77,7 @@ function App() {
         setIncome(data.totalIncome);
         setIncomeAmount("");
         setIncomeCategory("");
+        fetchIncomeByCategory();
       })
       .catch((err) => console.error(err));
   }
@@ -93,6 +101,7 @@ function App() {
         setExpense(data.totalExpense);
         setExpenseAmount("");
         setExpenseCategory("");
+        fetchExpenseByCategory();
       })
       .catch((err) => console.error(err));
   }
@@ -100,13 +109,11 @@ function App() {
   return (
     <div className="entire-content">
       <h2 className="title">Spending Tracker</h2>
-
       {/* Balance */}
       <div className="balance-card">
         <h3>Your Balance</h3>
         <h1>₹{balance}</h1>
       </div>
-
       {/* Income & Expense */}
       <div className="income-expense">
         <div className="income">
