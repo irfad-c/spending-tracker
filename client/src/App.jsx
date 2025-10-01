@@ -10,27 +10,47 @@ function App() {
   const [expenseCategory, setExpenseCategory] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
 
-  //Initial state: an object (empty object).
-  //Used when you want to store structured data (e.g., form data, user profile).
+  const [incomeByCategory, setIncomeByCategory] = useState([]);
+  const [expenseByCategory, setExpenseByCategory] = useState([]);
 
   const balance = income - expense;
 
-  // -GET request
   useEffect(() => {
     fetch("http://localhost:5000/api/income")
       .then((res) => res.json())
-      .then((data) => setIncome(data))
+      .then((data) => setIncome(data.totalIncome))
       .catch((err) => console.error(err));
   }, []);
 
   useEffect(() => {
     fetch("http://localhost:5000/api/expense")
+      //this parses response body into JS object
       .then((res) => res.json())
-      .then((data) => setExpense(data))
+      .then((data) => setExpense(data.totalExpense))
       .catch((err) => console.error(err));
   }, []);
 
-  //When the user submit the form this function will trigger - POST request also done inside this.
+  useEffect(() => {
+    fetch("http://localhost:5000/api/income/category")
+      .then((res) => res.json())
+      .then((data) => {
+        const sorted = data.sort((a, b) => b.total - a.total);
+        setIncomeByCategory(sorted);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/expense/category")
+      .then((res) => res.json())
+      .then((data) => {
+        const sorted = data.sort((a, b) => b.total - a.total);
+        setExpenseByCategory(sorted);
+        console.log(sorted);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   function addIncome(e) {
     e.preventDefault();
     if (!incomeCategory || !incomeAmount) {
@@ -47,16 +67,13 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // update state with net income from backend
-        setIncome(data.netIncome);
-        // clear form fields after successful update
+        setIncome(data.totalIncome);
         setIncomeAmount("");
         setIncomeCategory("");
       })
       .catch((err) => console.error(err));
   }
 
-  // Add expense
   function addExpense(e) {
     e.preventDefault();
     if (!expenseCategory || !expenseAmount) {
@@ -64,7 +81,6 @@ function App() {
       return;
     }
     fetch("http://localhost:5000/api/expense", {
-      // your expense route
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -74,9 +90,7 @@ function App() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // update state with total expense from backend
         setExpense(data.totalExpense);
-        // clear form fields after successful update
         setExpenseAmount("");
         setExpenseCategory("");
       })
@@ -85,81 +99,105 @@ function App() {
 
   return (
     <div className="entire-content">
-      <h2>Spending Tracker</h2>
+      <h2 className="title">Spending Tracker</h2>
+
       {/* Balance */}
-      <div className="balance">
+      <div className="balance-card">
         <h3>Your Balance</h3>
         <h1>₹{balance}</h1>
       </div>
+
       {/* Income & Expense */}
       <div className="income-expense">
         <div className="income">
           <h4>Income</h4>
-          <p className="income-p">₹{income}</p>
+          <p>₹{income}</p>
         </div>
         <div className="expense">
           <h4>Expense</h4>
-          <p className="expense-p">₹{expense}</p>
+          <p>₹{expense}</p>
         </div>
       </div>
-      {/*Form - Add income*/}
-      <div className="add-income">
-        <h3>Add New Income</h3>
-        <form onSubmit={addIncome}>
-          <select
-            className="input-box"
-            value={incomeCategory}
-            onChange={(e) => setIncomeCategory(e.target.value)}
-          >
-            <option value="">-- Select Category --</option>
-            <option value="Salary">Salary</option>
-            <option value="Family">Family</option>
-            <option value="Other">Other</option>
-          </select>
-          <input
-            type="number"
-            placeholder="Enter amount"
-            className="input-box"
-            value={incomeAmount}
-            onChange={(e) => setIncomeAmount(e.target.value)}
-          />
-          <button type="submit" className="submit-btn">
-            Add
-          </button>
-        </form>
+      <div className="form-card-both">
+        {/* Add Income */}
+        <div className="form-card">
+          <h3>Add New Income</h3>
+          <form onSubmit={addIncome}>
+            <select
+              className="input-box"
+              value={incomeCategory}
+              onChange={(e) => setIncomeCategory(e.target.value)}
+            >
+              <option value="">-- Select Category --</option>
+              <option value="Salary">Salary</option>
+              <option value="Family">Family</option>
+              <option value="Other">Other</option>
+            </select>
+            <input
+              type="number"
+              placeholder="Enter amount"
+              className="input-box"
+              value={incomeAmount}
+              onChange={(e) => setIncomeAmount(e.target.value)}
+            />
+            <button type="submit" className="submit-btn income-btn">
+              Add
+            </button>
+          </form>
+        </div>
+
+        {/* Add Expense */}
+        <div className="form-card">
+          <h3>Add New Expense</h3>
+          <form onSubmit={addExpense}>
+            <select
+              className="input-box"
+              value={expenseCategory}
+              onChange={(e) => setExpenseCategory(e.target.value)}
+            >
+              <option value="">-- Select Category --</option>
+              <option value="Food">Food</option>
+              <option value="Bills">Bills</option>
+              <option value="Charity">Charity</option>
+              <option value="Shopping">Shopping</option>
+              <option value="Health">Health</option>
+              <option value="Other">Other</option>
+            </select>
+            <input
+              type="number"
+              placeholder="Enter amount"
+              className="input-box"
+              value={expenseAmount}
+              onChange={(e) => setExpenseAmount(e.target.value)}
+            />
+            <button type="submit" className="submit-btn expense-btn">
+              Add
+            </button>
+          </form>
+        </div>
       </div>
-
-      {/* Form - Add Expense */}
-      <div className="add-expense">
-        <h3>Add New Expense</h3>
-        <form onSubmit={addExpense}>
-          <select
-            className="input-box"
-            value={expenseCategory}
-            onChange={(e) => setExpenseCategory(e.target.value)}
-          >
-            <option value="">-- Select Category --</option>
-            <option value="Food">Food</option>
-            <option value="Bills">Bills</option>
-            <option value="Other">Other</option>
-          </select>
-          <input
-            type="number"
-            placeholder="Enter amount"
-            className="input-box"
-            value={expenseAmount}
-            onChange={(e) => setExpenseAmount(e.target.value)}
-          />
-          <button type="submit" className="submit-btn">
-            Add
-          </button>
-        </form>
+      <div className="income-expense-category">
+        <h3 className="income-expense-category-h">Income by category</h3>
+        <ol className="income-expense-category-ol">
+          {incomeByCategory.map((e) => (
+            <li key={e._id}>
+              {e._id}: ₹{e.total}
+            </li>
+          ))}
+        </ol>
       </div>
-
-      {/* Category-wise totals */}
-
-      {/* Add Expense */}
+      <div className="income-expense-category">
+        <h3 className="income-expense-category-h">Expense by category</h3>
+        <ol className="income-expense-category-ol">
+          {expenseByCategory.map((e) => (
+            <li key={e._id}>
+              {e._id}: ₹{e.total}
+            </li>
+          ))}
+        </ol>
+      </div>
     </div>
   );
 }
+
 export default App;

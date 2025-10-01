@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/income", incomeRoutes);
+
 app.use("/api/expense", expenseRoutes);
 
 const PORT = process.env.PORT || 5000;

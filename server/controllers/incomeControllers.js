@@ -4,20 +4,28 @@ import IncomeVariable from "../models/income.js";
 // @route   GET /api/transactions
 export const getTotalIncome = async (req, res) => {
   try {
-    const totalIncome = await calculateTotalIncome();
-    res.json(totalIncome);
+    const result = await IncomeVariable.aggregate([
+      { $group: { _id: null, totalIncome: { $sum: "$incomeAmount" } } },
+    ]);
+
+    res.json({ totalIncome: result[0]?.totalIncome || 0 }); // clean response;
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-async function calculateTotalIncome() {
-  const result = await IncomeVariable.aggregate([
-    //don’t split into categories, just one group for everything
-    { $group: { _id: null, netIncome: { $sum: "$incomeAmount" } } },
-  ]);
-  return result[0]?.netIncome || 0;
-}
+export const incomeByCategory = async (req, res) => {
+  try {
+    const result = await IncomeVariable.aggregate([
+      { $group: { _id: "$incomeCategory", total: { $sum: "$incomeAmount" } } },
+    ]);
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc   income calculation
 // @route   POST /api/in
 export const incomeCalculation = async (req, res) => {
@@ -31,11 +39,13 @@ export const incomeCalculation = async (req, res) => {
       incomeCategory,
       incomeAmount,
     });
-    const netIncome = await calculateTotalIncome();
+    const totalIncome = await IncomeVariable.aggregate([
+      { $group: { _id: null, totalIncome: { $sum: "$incomeAmount" } } },
+    ]);
 
     res.status(201).json({
       message: "Income added successfully",
-      netIncome,
+      totalIncome: totalIncome[0]?.totalIncome || 0,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

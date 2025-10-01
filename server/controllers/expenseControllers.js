@@ -5,7 +5,8 @@ import ExpenseVariable from "../models/expense.js"; // import your Expense model
 export const getTotalExpense = async (req, res) => {
   try {
     const totalExpense = await calculateTotalExpense();
-    res.json(totalExpense);
+//here data will be {"totalExpense":200}
+    res.json({ totalExpense }); 
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -14,11 +15,12 @@ export const getTotalExpense = async (req, res) => {
 // helper function to calculate total expense
 async function calculateTotalExpense() {
   const result = await ExpenseVariable.aggregate([
-    // don’t split into categories, just one group for everything
     { $group: { _id: null, totalExpense: { $sum: "$expenseAmount" } } },
   ]);
-  return result[0]?.totalExpense || 0;
+  return result[0]?.totalExpense || 0; // return just the number
 }
+
+
 
 // @desc   Add new expense
 // @route   POST /api/expenses
@@ -44,3 +46,16 @@ export const expenseCalculation = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const expenseByCategory = async (req, res) => {
+  try {
+    const result = await ExpenseVariable.aggregate([
+      { $group: { _id: "$expenseCategory", total: { $sum: "$expenseAmount" } } },
+    ]);
+
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
