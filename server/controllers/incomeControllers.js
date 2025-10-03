@@ -31,9 +31,7 @@ export const incomeByCategory = async (req, res) => {
 export const incomeCalculation = async (req, res) => {
   try {
     const { incomeCategory, incomeAmount } = req.body;
-    if (!incomeCategory || !incomeAmount) {
-      return res.status(400).json({ message: "All required fields missing" });
-    }
+  
 
     const newIncome = await IncomeVariable.create({
       incomeCategory,

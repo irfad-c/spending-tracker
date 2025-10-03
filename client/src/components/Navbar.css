@@ -1,0 +1,120 @@
+/* Navbar Container */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #16a34a;
+  padding: 12px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo */
+.logo a {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+  color: #d1d5db;
+}
+
+/* Nav Actions Button */
+.nav-actions .nav-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background-color: #4f46e5;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nav-actions .nav-btn:hover {
+  background-color: #3730a3;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  flex-direction: column; /* stack the 3 lines vertically */
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+}
+/*here span comes from <span> not className*/
+.hamburger span {
+  height: 3px;
+  width: 100%;
+  background: white; /* line color */
+  border-radius: 2px; /* makes edges slightly rounded */
+  transition: all 0.3s ease; /* smooth animation when styles change */
+}
+
+/* Hamburger Animation */
+/*nth-child(1) = the first line.*/
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    background-color: #16a34a;
+    height: calc(100% - 60px);
+    width: 220px;
+    flex-direction: column;
+    align-items: center;
+    /*It tells the browser to align all the flex items at the start of the main axis.
+    If your flex direction is row (default), then flex-start means items will be aligned to the left.*/
+    justify-content: flex-start;
+    padding-top: 30px;
+    gap: 20px;
+    /*moves an element horizontally to the right by 100% of its own width.*/
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .nav-links.open {
+    transform: translateX(0);
+  }
+
+  .nav-actions {
+    display: none;
+  }
+}

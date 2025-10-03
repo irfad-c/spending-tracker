@@ -5,8 +5,8 @@ import ExpenseVariable from "../models/expense.js"; // import your Expense model
 export const getTotalExpense = async (req, res) => {
   try {
     const totalExpense = await calculateTotalExpense();
-//here data will be {"totalExpense":200}
-    res.json({ totalExpense }); 
+    //here data will be {"totalExpense":200}
+    res.json({ totalExpense });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -20,16 +20,11 @@ async function calculateTotalExpense() {
   return result[0]?.totalExpense || 0; // return just the number
 }
 
-
-
 // @desc   Add new expense
 // @route   POST /api/expenses
 export const expenseCalculation = async (req, res) => {
   try {
     const { expenseCategory, expenseAmount } = req.body;
-    if (!expenseCategory || !expenseAmount) {
-      return res.status(400).json({ message: "All required fields missing" });
-    }
 
     const newExpense = await ExpenseVariable.create({
       expenseCategory,
@@ -50,7 +45,9 @@ export const expenseCalculation = async (req, res) => {
 export const expenseByCategory = async (req, res) => {
   try {
     const result = await ExpenseVariable.aggregate([
-      { $group: { _id: "$expenseCategory", total: { $sum: "$expenseAmount" } } },
+      {
+        $group: { _id: "$expenseCategory", total: { $sum: "$expenseAmount" } },
+      },
     ]);
 
     res.json(result);
@@ -58,4 +55,3 @@ export const expenseByCategory = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
