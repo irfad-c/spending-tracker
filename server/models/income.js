@@ -11,6 +11,9 @@ const incomeSchema = new mongoose.Schema(
       required: true,
     },
   },
+  //Mongoose automatically adds createdAt and updatedAt fields
+  //Mongoose convert the BSON date data to JS date object in NodeJS memory
+  //createdAt stored as JS Date object in NodeJS memory (from Mongoose with timestamps: true)
   { timestamps: true }
 );
 //"Income" → the model name you chose.

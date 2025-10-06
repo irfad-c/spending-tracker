@@ -6,6 +6,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import incomeRoutes from "./routes/incomeRoutes.js";
 import expenseRoutes from "./routes/expenseRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
 
 //load environment variables from a file called .env into your app.
 dotenv.config();
@@ -24,6 +25,8 @@ app.get("/", (req, res) => {
 app.use("/api/income", incomeRoutes);
 
 app.use("/api/expense", expenseRoutes);
+
+app.use("/api/transactions", transactionRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

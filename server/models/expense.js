@@ -14,7 +14,6 @@ const expenseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// "Expense" → model name, MongoDB will create "expenses" collection
 const ExpenseVariable = mongoose.model("Expense", expenseSchema);
 
 export default ExpenseVariable;

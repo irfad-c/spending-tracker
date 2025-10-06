@@ -33,17 +33,17 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/income" onClick={() => setIsOpen(false)}>
+          <Link to="/transactions" onClick={() => setIsOpen(false)}>
             Transactions
           </Link>
         </li>
         <li>
-          <Link to="/expenses" onClick={() => setIsOpen(false)}>
+          <Link to="/categories" onClick={() => setIsOpen(false)}>
             Categories
           </Link>
         </li>
         <li>
-          <Link to="/reports" onClick={() => setIsOpen(false)}>
+          <Link to="/settings" onClick={() => setIsOpen(false)}>
             Settings
           </Link>
         </li>
