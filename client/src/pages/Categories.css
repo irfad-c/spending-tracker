@@ -1,0 +1,123 @@
+/* Main container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+}
+
+/* Flex display for Income and Expense sections */
+.display {
+  display: flex;
+  gap: 40px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* Common styles for both containers */
+.income-container,
+.expense-container {
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  padding: 25px;
+  transition: 0.3s ease;
+}
+
+.income-container:hover,
+.expense-container:hover {
+  transform: translateY(-4px);
+}
+
+/* Headings */
+.income-container h1,
+.expense-container h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 22px;
+  color: #222;
+}
+
+/* Each category name */
+.income-container h3,
+.expense-container h3 {
+  background-color: #f1f3f5;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+.income-container h3:hover,
+.expense-container h3:hover {
+  background-color: #e9ecef;
+}
+
+/* Input field */
+.input-box {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+}
+
+.input-box:focus {
+  border-color: #007bff;
+}
+
+/* Add button */
+.submit-btn {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+/* Income Add Button */
+.income-btn {
+  background-color: #28a745;
+}
+
+.income-btn:hover {
+  background-color: #218838;
+}
+
+/* Expense Add Button */
+.expense-btn {
+  background-color: #dc3545;
+}
+
+.expense-btn:hover {
+  background-color: #b02a37;
+}
+
+/* Responsive layout for small screens */
+@media (max-width: 768px) {
+  .display {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .income-container,
+  .expense-container {
+    width: 90%;
+  }
+}
