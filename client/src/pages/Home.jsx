@@ -1,8 +1,6 @@
 import "./Home.css";
 import { useState, useEffect } from "react";
 
-
-
 function Home() {
   const [income, setIncome] = useState(0);
   const [incomeCategory, setIncomeCategory] = useState("");
@@ -20,7 +18,7 @@ function Home() {
 
   useEffect(() => {
     fetch("http://localhost:5000/api/income")
-    //taking the http request and converting the body from json text to javascript object or array
+      //taking the http request and converting the body from json text to javascript object or array
       .then((res) => res.json())
       .then((data) => setIncome(data.totalIncome))
       .catch((err) => console.error(err));
@@ -43,6 +41,8 @@ function Home() {
       })
       .catch((err) => console.error(err));
   };
+
+  //this code is needed to fetch the data at the beginning
   useEffect(() => {
     fetchExpenseByCategory();
   }, []);
@@ -157,7 +157,7 @@ function Home() {
             </form>
           </div>
 
-          {/* Add Expense */}
+          {/*form - add Expense */}
           <div className="form-card">
             <h3>Add New Expense</h3>
             <form onSubmit={addExpense}>
@@ -208,8 +208,6 @@ function Home() {
           </ol>
         </div>
       </div>
-
-  
     </>
   );
 }
