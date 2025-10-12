@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Categories.css";
 import { useEffect } from "react";
+import Home from "./Home.jsx";
+import { ReactContextObject } from "./ReactContext.js";
 
 const Categories = () => {
-  // Store all categories
-  const [incomeCategory, setIncomeCategory] = useState([]);
-  const [expenseCategory, setExpenseCategory] = useState([]);
+  const {
+    incomeCategory,
+    expenseCategory,
+    setIncomeCategory,
+    setExpenseCategory,
+  } = useContext(ReactContextObject);
+
+  //useState not needed here for setIncomeCategory.Because clicking add button will change the state
+  //Here useState is present in App.jsx
+  //useContext can read and update the state in App.jsx
 
   // Store input values separately
   const [newIncome, setNewIncome] = useState("");
@@ -39,7 +48,7 @@ const Categories = () => {
       body: JSON.stringify({ name: newIncome.trim() }),
     })
       .then((res) => res.json())
-    
+
       .then((data) => {
         setIncomeCategory((prev) => [...prev, data]);
         setNewIncome("");
@@ -71,49 +80,53 @@ const Categories = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="display">
-          {/*income container */}
-          <div className="income-container">
-            <h1>Income</h1>
-            {incomeCategory.map((item) => (
-              <h3 key={item._id}>{item.name}</h3>
-            ))}
-            <form onSubmit={addIncomeCategory}>
-              <input
-                type="text"
-                placeholder="Enter category name"
-                className="input-box"
-                value={newIncome}
-                onChange={(e) => setNewIncome(e.target.value)}
-              />
-              <button type="submit" className="submit-btn income-btn">
-                Add
-              </button>
-            </form>
-          </div>
-          {/*expense container */}
-          <div className="expense-container">
-            <h1>Expense</h1>
-            {expenseCategory.map((item) => (
-              <h3 key={item._id}>{item.name}</h3>
-            ))}
+      <ReactContextObject.Provider value={{ incomeCategory, expenseCategory }}>
+        <div className="container">
+          <div className="display">
+            {/*income container */}
+            <div className="income-container">
+              <h1>Income</h1>
+              {incomeCategory.map((item) => (
+                <h3 key={item._id}>{item.name}</h3>
+              ))}
+              <form onSubmit={addIncomeCategory}>
+                <input
+                  type="text"
+                  placeholder="Enter category name"
+                  className="input-box"
+                  value={newIncome}
+                  onChange={(e) => setNewIncome(e.target.value)}
+                />
+                <button type="submit" className="submit-btn income-btn">
+                  Add
+                </button>
+              </form>
+            </div>
+            {/*expense container */}
+            <div className="expense-container">
+              <h1>Expense</h1>
+              {expenseCategory.map((item) => (
+                <h3 key={item._id}>{item.name}</h3>
+              ))}
 
-            <form onSubmit={addExpenseCategory}>
-              <input
-                type="text"
-                placeholder="Enter category name"
-                className="input-box"
-                value={newExpense}
-                onChange={(e) => setNewExpense(e.target.value)}
-              />
-              <button type="submit" className="submit-btn expense-btn">
-                Add
-              </button>
-            </form>
+              <form onSubmit={addExpenseCategory}>
+                <input
+                  type="text"
+                  placeholder="Enter category name"
+                  className="input-box"
+                  value={newExpense}
+                  onChange={(e) => setNewExpense(e.target.value)}
+                />
+                <button type="submit" className="submit-btn expense-btn">
+                  Add
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
+
+        <Home />
+      </ReactContextObject.Provider>
     </>
   );
 };

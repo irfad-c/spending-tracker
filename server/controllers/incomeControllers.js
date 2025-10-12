@@ -30,10 +30,10 @@ export const incomeByCategory = async (req, res) => {
 // @route   POST /api/transactions
 export const incomeCalculation = async (req, res) => {
   try {
-    const { incomeCategory, incomeAmount } = req.body;
+    const { selectedIncomeCategory, incomeAmount } = req.body;
 
     const newIncome = await IncomeVariable.create({
-      incomeCategory,
+      selectedIncomeCategory,
       incomeAmount,
     });
     const totalIncome = await IncomeVariable.aggregate([

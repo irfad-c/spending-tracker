@@ -1,14 +1,16 @@
 import "./Home.css";
-import { useState, useEffect } from "react";
-
+import { useState, useEffect, useContext } from "react";
+import { ReactContextObject } from "./ReactContext.js";
 function Home() {
+  const { incomeCategory, expenseCategory } = useContext(ReactContextObject);
+
   const [income, setIncome] = useState(0);
-  const [incomeCategory, setIncomeCategory] = useState("");
+  const [selectedIncomeCategory, setSelectedIncomeCategory] = useState("");
   //when the user type in the input box,its value will stored in react state.
   const [incomeAmount, setIncomeAmount] = useState("");
 
   const [expense, setExpense] = useState(0);
-  const [expenseCategory, setExpenseCategory] = useState("");
+  const [selectedExpenseCategory, setSelectedExpenseCategory] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
 
   const [incomeByCategory, setIncomeByCategory] = useState([]);
@@ -64,7 +66,7 @@ function Home() {
 
   function addIncome(e) {
     e.preventDefault();
-    if (!incomeCategory || !incomeAmount) {
+    if (!selectedIncomeCategory || !incomeAmount) {
       alert("Please enter both category and income amount");
       return;
     }
@@ -72,7 +74,7 @@ function Home() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        incomeCategory,
+        selectedIncomeCategory,
         incomeAmount: Number(incomeAmount),
       }),
     })
@@ -80,7 +82,7 @@ function Home() {
       .then((data) => {
         setIncome(data.totalIncome);
         setIncomeAmount("");
-        setIncomeCategory("");
+        setSelectedIncomeCategory("");
         fetchIncomeByCategory();
       })
       .catch((err) => console.error(err));
@@ -88,7 +90,7 @@ function Home() {
 
   function addExpense(e) {
     e.preventDefault();
-    if (!expenseCategory || !expenseAmount) {
+    if (!selectedExpenseCategory || !expenseAmount) {
       alert("Please enter both category and expense amount");
       return;
     }
@@ -96,7 +98,7 @@ function Home() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        expenseCategory,
+        selectedExpenseCategory,
         expenseAmount: Number(expenseAmount),
       }),
     })
@@ -104,7 +106,7 @@ function Home() {
       .then((data) => {
         setExpense(data.totalExpense);
         setExpenseAmount("");
-        setExpenseCategory("");
+        setSelectedExpenseCategory("");
         fetchExpenseByCategory();
       })
       .catch((err) => console.error(err));
@@ -136,13 +138,15 @@ function Home() {
             <form onSubmit={addIncome}>
               <select
                 className="input-box"
-                value={incomeCategory}
-                onChange={(e) => setIncomeCategory(e.target.value)}
+                value={selectedIncomeCategory}
+                onChange={(e) => setSelectedIncomeCategory(e.target.value)}
               >
                 <option value="">-- Select Category --</option>
-                <option value="Salary">Salary</option>
-                <option value="Family">Family</option>
-                <option value="Other">Other</option>
+                {incomeCategory.map((item) => (
+                  <option key={item._id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
               <input
                 type="number"
@@ -163,16 +167,15 @@ function Home() {
             <form onSubmit={addExpense}>
               <select
                 className="input-box"
-                value={expenseCategory}
-                onChange={(e) => setExpenseCategory(e.target.value)}
+                value={selectedExpenseCategory}
+                onChange={(e) => setSelectedExpenseCategory(e.target.value)}
               >
                 <option value="">-- Select Category --</option>
-                <option value="Food">Food</option>
-                <option value="Bills">Bills</option>
-                <option value="Charity">Charity</option>
-                <option value="Shopping">Shopping</option>
-                <option value="Health">Health</option>
-                <option value="Other">Other</option>
+                {expenseCategory.map((item) => (
+                  <option key={item._id} value={item.name}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
               <input
                 type="number"

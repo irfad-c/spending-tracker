@@ -24,10 +24,10 @@ async function calculateTotalExpense() {
 // @route   POST /api/expenses
 export const expenseCalculation = async (req, res) => {
   try {
-    const { expenseCategory, expenseAmount } = req.body;
+    const { selectedExpenseCategory, expenseAmount } = req.body;
 
     const newExpense = await ExpenseVariable.create({
-      expenseCategory,
+      selectedExpenseCategory,
       expenseAmount,
     });
 
