@@ -28,11 +28,6 @@
   transition: 0.3s ease;
 }
 
-.income-container:hover,
-.expense-container:hover {
-  transform: translateY(-4px);
-}
-
 /* Headings */
 .income-container h1,
 .expense-container h1 {
@@ -49,7 +44,7 @@
   margin: 8px 0;
   padding: 10px;
   border-radius: 8px;
-  text-align: center;
+  text-align: right;
   font-weight: 500;
   font-size: 16px;
   transition: 0.3s ease;
@@ -89,6 +84,31 @@
   color: #fff;
   cursor: pointer;
   transition: 0.3s ease;
+}
+
+.delete-btn {
+  padding: 8px 14px;
+  margin: 5px;
+  background-color: #ff4d4f; /* soft red tone */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(255, 77, 79, 0.3);
+}
+
+.delete-btn:hover {
+  background-color: #e63946; /* deeper red on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.4);
+}
+
+.delete-btn:active {
+  transform: scale(0.96);
+  background-color: #c71c28; /* darker tone when clicked */
 }
 
 /* Income Add Button */

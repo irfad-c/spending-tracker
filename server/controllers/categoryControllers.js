@@ -40,3 +40,16 @@ export const getExpenseCategory = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const deleteCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = await CategoryVariable.findByIdAndDelete(id);
+    if (!data) {
+      return res.status(404).json({ message: "Category not found" });
+    }
+    res.json({ message: "Category deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

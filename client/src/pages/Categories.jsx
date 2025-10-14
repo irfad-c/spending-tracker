@@ -78,6 +78,27 @@ const Categories = () => {
       .catch((err) => console.error("Error adding expense category:", err));
   };
 
+  const handleDelete = async (type, id) => {
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/category/${type}/${id}`,
+        { method: "DELETE" }
+      );
+      if (res.ok) {
+        //Checks if the delete request to the backend was successful.
+        if (type === "income") {
+          setIncomeCategory(incomeCategory.filter((item) => item._id !== id));
+        } else {
+          setExpenseCategory(expenseCategory.filter((item) => item._id !== id));
+        }
+      } else {
+        console.error("Failed to delete");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
     <>
       <ReactContextObject.Provider value={{ incomeCategory, expenseCategory }}>
@@ -87,7 +108,17 @@ const Categories = () => {
             <div className="income-container">
               <h1>Income</h1>
               {incomeCategory.map((item) => (
-                <h3 key={item._id}>{item.name}</h3>
+                <div id={item._id}>
+                  <h3>
+                    {item.name}{" "}
+                    <button
+                      onClick={() => handleDelete("income", item._id)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </h3>
+                </div>
               ))}
               <form onSubmit={addIncomeCategory}>
                 <input
@@ -106,7 +137,17 @@ const Categories = () => {
             <div className="expense-container">
               <h1>Expense</h1>
               {expenseCategory.map((item) => (
-                <h3 key={item._id}>{item.name}</h3>
+                <div key={item._id}>
+                  <h3>
+                    {item.name}{" "}
+                    <button
+                      onClick={() => handleDelete("expense", item._id)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </h3>
+                </div>
               ))}
 
               <form onSubmit={addExpenseCategory}>
@@ -124,8 +165,6 @@ const Categories = () => {
             </div>
           </div>
         </div>
-
-        <Home />
       </ReactContextObject.Provider>
     </>
   );
