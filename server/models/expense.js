@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const expenseSchema = new mongoose.Schema(
   {
-    expenseCategory: {
+    selectedExpenseCategory: {
       type: String,
       required: true,
     },

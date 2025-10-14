@@ -46,7 +46,10 @@ export const expenseByCategory = async (req, res) => {
   try {
     const result = await ExpenseVariable.aggregate([
       {
-        $group: { _id: "$expenseCategory", total: { $sum: "$expenseAmount" } },
+        $group: {
+          _id: "$selectedExpenseCategory",
+          total: { $sum: "$expenseAmount" },
+        },
       },
     ]);
 

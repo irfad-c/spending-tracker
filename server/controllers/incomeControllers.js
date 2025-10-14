@@ -17,7 +17,12 @@ export const getTotalIncome = async (req, res) => {
 export const incomeByCategory = async (req, res) => {
   try {
     const result = await IncomeVariable.aggregate([
-      { $group: { _id: "$incomeCategory", total: { $sum: "$incomeAmount" } } },
+      {
+        $group: {
+          _id: "$selectedIncomeCategory",
+          total: { $sum: "$incomeAmount" },
+        },
+      },
     ]);
 
     res.json(result);

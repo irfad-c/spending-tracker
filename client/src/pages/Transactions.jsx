@@ -20,7 +20,7 @@ const Transactions = () => {
           {transactions.map((data) => (
             <li key={data._id} className="transaction-item">
               <h5 className="category">
-                {data.expenseCategory || data.incomeCategory}
+                {data.selectedExpenseCategory || data.selectedIncomeCategory}
               </h5>
               <p
                 className={`amount ${data.incomeAmount ? "income" : "expense"}`}

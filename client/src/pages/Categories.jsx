@@ -108,16 +108,14 @@ const Categories = () => {
             <div className="income-container">
               <h1>Income</h1>
               {incomeCategory.map((item) => (
-                <div id={item._id}>
-                  <h3>
-                    {item.name}{" "}
-                    <button
-                      onClick={() => handleDelete("income", item._id)}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
-                  </h3>
+                <div className="category-container" id={item._id}>
+                  <h3>{item.name} </h3>{" "}
+                  <button
+                    onClick={() => handleDelete("income", item._id)}
+                    className="delete-btn"
+                  >
+                    Delete
+                  </button>
                 </div>
               ))}
               <form onSubmit={addIncomeCategory}>
@@ -137,16 +135,14 @@ const Categories = () => {
             <div className="expense-container">
               <h1>Expense</h1>
               {expenseCategory.map((item) => (
-                <div key={item._id}>
-                  <h3>
-                    {item.name}{" "}
-                    <button
-                      onClick={() => handleDelete("expense", item._id)}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
-                  </h3>
+                <div className="category-container" key={item._id}>
+                  <h3>{item.name} </h3>
+                  <button
+                    onClick={() => handleDelete("expense", item._id)}
+                    className="delete-btn"
+                  >
+                    Delete
+                  </button>
                 </div>
               ))}
 

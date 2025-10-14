@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const incomeSchema = new mongoose.Schema(
   {
-    incomeCategory: {
+    selectedIncomeCategory: {
       type: String,
       required: true,
     },
