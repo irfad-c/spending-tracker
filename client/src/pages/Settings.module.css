@@ -1,0 +1,50 @@
+.container {
+  background-color: #f5f5f5; /* light neutral background */
+  padding: 20px 25px;
+  margin: 100px auto;
+  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.container h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #222;
+}
+
+.containerUl {
+  list-style: none; /* remove bullets */
+  padding-left: 0;
+  margin: 0;
+}
+
+.containerLi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.containerLi:hover {
+  background-color: #e0f0ff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.settingLabel {
+  font-weight: 500;
+  color: #333;
+}
+
+.settingValue {
+  font-weight: 400;
+  color: #555;
+}

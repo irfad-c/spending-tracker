@@ -6,6 +6,7 @@ import Transactions from "./pages/Transactions";
 import { ReactContextObject } from "./pages/ReactContext.js";
 import { useState, useEffect } from "react";
 import Categories from "./pages/Categories.jsx";
+import Settings from "./pages/Settings.jsx";
 
 function App() {
   const [incomeCategory, setIncomeCategory] = useState([]);
@@ -45,7 +46,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/categories" element={<Categories />} />
-            <Route path="/settings" element={<h1>Settings</h1>} />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </Router>
       </ReactContextObject.Provider>

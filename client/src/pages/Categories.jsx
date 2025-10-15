@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import "./Categories.css";
+import styles from "./Categories.module.css";
 import { useEffect } from "react";
 import Home from "./Home.jsx";
 import { ReactContextObject } from "./ReactContext.js";
@@ -102,44 +102,49 @@ const Categories = () => {
   return (
     <>
       <ReactContextObject.Provider value={{ incomeCategory, expenseCategory }}>
-        <div className="container">
-          <div className="display">
-            {/*income container */}
-            <div className="income-container">
+        <div className={styles.container}>
+          <div className={styles.display}>
+            {/* Income container */}
+            <div className={styles.incomeContainer}>
               <h1>Income</h1>
               {incomeCategory.map((item) => (
-                <div className="category-container" id={item._id}>
-                  <h3>{item.name} </h3>{" "}
+                <div className={styles.categoryContainer} id={item._id}>
+                  <h3>{item.name}</h3>
                   <button
                     onClick={() => handleDelete("income", item._id)}
-                    className="delete-btn"
+                    className={styles.deleteBtn}
                   >
                     Delete
                   </button>
                 </div>
               ))}
+
               <form onSubmit={addIncomeCategory}>
                 <input
                   type="text"
                   placeholder="Enter category name"
-                  className="input-box"
+                  className={styles.inputBox}
                   value={newIncome}
                   onChange={(e) => setNewIncome(e.target.value)}
                 />
-                <button type="submit" className="submit-btn income-btn">
+                <button
+                  type="submit"
+                  className={`${styles.submitBtn} ${styles.incomeBtn}`}
+                >
                   Add
                 </button>
               </form>
             </div>
-            {/*expense container */}
-            <div className="expense-container">
+
+            {/* Expense container */}
+            <div className={styles.expenseContainer}>
               <h1>Expense</h1>
               {expenseCategory.map((item) => (
-                <div className="category-container" key={item._id}>
-                  <h3>{item.name} </h3>
+                <div className={styles.categoryContainer} key={item._id}>
+                  <h3>{item.name}</h3>
                   <button
                     onClick={() => handleDelete("expense", item._id)}
-                    className="delete-btn"
+                    className={styles.deleteBtn}
                   >
                     Delete
                   </button>
@@ -150,11 +155,14 @@ const Categories = () => {
                 <input
                   type="text"
                   placeholder="Enter category name"
-                  className="input-box"
+                  className={styles.inputBox}
                   value={newExpense}
                   onChange={(e) => setNewExpense(e.target.value)}
                 />
-                <button type="submit" className="submit-btn expense-btn">
+                <button
+                  type="submit"
+                  className={`${styles.submitBtn} ${styles.expenseBtn}`}
+                >
                   Add
                 </button>
               </form>

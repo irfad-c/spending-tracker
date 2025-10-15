@@ -18,8 +18,8 @@
 }
 
 /* Common styles for both containers */
-.income-container,
-.expense-container {
+.incomeContainer,
+.expenseContainer {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -29,8 +29,8 @@
 }
 
 /* Headings */
-.income-container h1,
-.expense-container h1 {
+.incomeContainer h1,
+.expenseContainer h1 {
   text-align: center;
   margin-bottom: 15px;
   font-size: 22px;
@@ -38,8 +38,8 @@
 }
 
 /* Each category name */
-.income-container h3,
-.expense-container h3 {
+.incomeContainer h3,
+.expenseContainer h3 {
   background-color: #f1f3f5;
   margin: 8px 10px;
   padding: 10px;
@@ -51,15 +51,17 @@
   width: 200px;
 }
 
-.income-container h3:hover,
-.expense-container h3:hover {
+.incomeContainer h3:hover,
+.expenseContainer h3:hover {
   background-color: #e9ecef;
 }
-.category-container {
+
+.categoryContainer {
   display: flex;
   justify-content: space-between;
 }
-.delete-btn {
+
+.deleteBtn {
   padding: 5px 5px;
   text-align: right;
   margin: 8px;
@@ -74,20 +76,19 @@
   box-shadow: 0 2px 6px rgba(255, 77, 79, 0.3);
 }
 
-.delete-btn:hover {
+.deleteBtn:hover {
   background-color: #e63946; /* deeper red on hover */
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(230, 57, 70, 0.4);
 }
 
-.delete-btn:active {
+.deleteBtn:active {
   transform: scale(0.96);
   background-color: #c71c28; /* darker tone when clicked */
 }
 
-
 /* Input field */
-.input-box {
+.inputBox {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
@@ -98,12 +99,12 @@
   transition: border-color 0.3s ease;
 }
 
-.input-box:focus {
+.inputBox:focus {
   border-color: #007bff;
 }
 
 /* Add button */
-.submit-btn {
+.submitBtn {
   display: block;
   width: 100%;
   margin-top: 10px;
@@ -118,20 +119,20 @@
 }
 
 /* Income Add Button */
-.income-btn {
+.incomeBtn {
   background-color: #28a745;
 }
 
-.income-btn:hover {
+.incomeBtn:hover {
   background-color: #218838;
 }
 
 /* Expense Add Button */
-.expense-btn {
+.expenseBtn {
   background-color: #dc3545;
 }
 
-.expense-btn:hover {
+.expenseBtn:hover {
   background-color: #b02a37;
 }
 
@@ -142,8 +143,8 @@
     align-items: center;
   }
 
-  .income-container,
-  .expense-container {
+  .incomeContainer,
+  .expenseContainer {
     width: 90%;
   }
 }
