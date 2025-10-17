@@ -84,8 +84,10 @@ const Categories = () => {
         `http://localhost:5000/api/category/${type}/${id}`,
         { method: "DELETE" }
       );
+      /*res.ok is a built-in property of the Response object returned by fetch() in JavaScript.
+      res.ok will be true if the HTTP status is in the range 200–299,
+meaning the request succeeded.*/
       if (res.ok) {
-        //Checks if the delete request to the backend was successful.
         if (type === "income") {
           setIncomeCategory(incomeCategory.filter((item) => item._id !== id));
         } else {

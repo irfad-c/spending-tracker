@@ -10,6 +10,10 @@ const expenseSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    type: {
+      type: String,
+      default: "expense",
+    },
   },
   { timestamps: true }
 );

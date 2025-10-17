@@ -25,6 +25,15 @@
 
 .category {
   font-weight: 600;
+  margin: 5px;
+  padding: 15px;
+  background-color: rgb(105, 155, 241);
+  border-radius: 10px;
+  text-align: center;
+}
+.amount-box {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .amount {
@@ -33,11 +42,41 @@
 }
 
 .amount.income {
-  color: #2ecc71; /* Green */
+  color: #2ecc71;
+  height: 50px;
+  margin: 5px;
 }
 
 .amount.expense {
-  color: #e74c3c; /* Red */
+  color: #e74c3c;
+  height: 50px;
+  margin: 5px;
+}
+
+.deleteBtn {
+  padding: 5px 5px;
+  text-align: right;
+  margin: 5px;
+  background-color: #ff4d4f; /* soft red tone */
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(255, 77, 79, 0.3);
+}
+
+.deleteBtn:hover {
+  background-color: #e63946; /* deeper red on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(230, 57, 70, 0.4);
+}
+
+.deleteBtn:active {
+  transform: scale(0.96);
+  background-color: #c71c28; /* darker tone when clicked */
 }
 
 .date {
