@@ -38,7 +38,8 @@ const Transactions = () => {
             <li key={data._id} className="transaction-item">
               <div className="amount-box">
                 <p className="category">
-                  {data.selectedExpenseCategory || data.selectedIncomeCategory}
+                  {data.selectedExpenseCategory?.categoryName ||
+                    data.selectedIncomeCategory?.categoryName}
                 </p>
                 <p
                   className={`amount ${

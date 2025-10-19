@@ -1,8 +1,5 @@
 import IncomeVariable from "../models/income.js";
 
-// @desc    Get current net Income data
-// @route   GET /api/transactions
-//incomeRoutes.js file determined this as a GET request
 export const getTotalIncome = async (req, res) => {
   try {
     const result = await IncomeVariable.aggregate([
@@ -14,12 +11,23 @@ export const getTotalIncome = async (req, res) => {
   }
 };
 //GET request for income by category calculation
-export const incomeByCategory = async (req, res) => {
+export const getIncomeByCategory = async (req, res) => {
   try {
     const result = await IncomeVariable.aggregate([
       {
+        $lookup: {
+          from: "categories", // 👈 the collection name 
+          localField: "selectedIncomeCategory", // field in IncomeVariable
+          foreignField: "_id", // field in CategoryVariable
+          as: "categoryDetails", // result will be stored in this field
+        },
+      },
+      // Unwind the array (each lookup result is an array)
+      { $unwind: "$categoryDetails" },
+      // Group by category name instead of ID
+      {
         $group: {
-          _id: "$selectedIncomeCategory",
+          _id: "$categoryDetails.categoryName",
           total: { $sum: "$incomeAmount" },
         },
       },
@@ -32,12 +40,12 @@ export const incomeByCategory = async (req, res) => {
 };
 
 // @desc   total income calculation
-// @route   POST /api/transactions
-export const incomeCalculation = async (req, res) => {
+
+export const postIncomeCalculation = async (req, res) => {
   try {
     const { selectedIncomeCategory, incomeAmount } = req.body;
 
-    const newIncome = await IncomeVariable.create({
+    await IncomeVariable.create({
       selectedIncomeCategory,
       incomeAmount,
     });

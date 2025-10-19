@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const incomeSchema = new mongoose.Schema(
   {
     selectedIncomeCategory: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
       required: true,
     },
     incomeAmount: {
