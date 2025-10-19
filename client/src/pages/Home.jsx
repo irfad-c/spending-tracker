@@ -1,34 +1,46 @@
 import "./Home.css";
-import { useState, useEffect, useContext } from "react";
-import { ReactContextObject } from "./ReactContext.js";
+import { useState, useEffect } from "react";
+
 function Home() {
-  const { incomeCategory, expenseCategory } = useContext(ReactContextObject);
-
+  const [incomeCategory, setIncomeCategory] = useState([]);
+  const [expenseCategory, setExpenseCategory] = useState([]);
   const [income, setIncome] = useState(0);
-  const [selectedIncomeCategory, setSelectedIncomeCategory] = useState("");
-  //when the user type in the input box,its value will stored in react state.
-  const [incomeAmount, setIncomeAmount] = useState("");
-
   const [expense, setExpense] = useState(0);
+  const [selectedIncomeCategory, setSelectedIncomeCategory] = useState("");
+  const [incomeAmount, setIncomeAmount] = useState("");
   const [selectedExpenseCategory, setSelectedExpenseCategory] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
-
   const [incomeByCategory, setIncomeByCategory] = useState([]);
   const [expenseByCategory, setExpenseByCategory] = useState([]);
 
   const balance = income - expense;
 
+  //This for fetching category for  drop down menu
+  useEffect(() => {
+    fetch("http://localhost:5000/api/category/income")
+      .then((res) => res.json())
+      .then((data) => setIncomeCategory(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/category/expense")
+      .then((res) => res.json())
+      .then((data) => setExpenseCategory(data))
+      .catch((err) => console.error(err));
+  }, []);
+
+  //Total Income
   useEffect(() => {
     fetch("http://localhost:5000/api/income")
-      //taking the http request and converting the body from json text to javascript object or array
       .then((res) => res.json())
       .then((data) => setIncome(data.totalIncome))
       .catch((err) => console.error(err));
   }, []);
 
+  //Total Expense
   useEffect(() => {
     fetch("http://localhost:5000/api/expense")
-      //this parses response body into JS object
       .then((res) => res.json())
       .then((data) => setExpense(data.totalExpense))
       .catch((err) => console.error(err));
@@ -38,6 +50,7 @@ function Home() {
     fetch("http://localhost:5000/api/expense/category")
       .then((res) => res.json())
       .then((data) => {
+        //a={_id="Food",total:5000} , b={_id:"Charity",total:1000}
         const sorted = data.sort((a, b) => b.total - a.total);
         setExpenseByCategory(sorted);
       })
@@ -58,7 +71,6 @@ function Home() {
       })
       .catch((err) => console.error(err));
   };
-  //this useEffect is needed when we load the page initially
   //empty dependency array.Run this only once, when the component is mounted (first time it appears on screen).
   useEffect(() => {
     fetchIncomeByCategory();
@@ -143,8 +155,8 @@ function Home() {
               >
                 <option value="">-- Select Category --</option>
                 {incomeCategory.map((item) => (
-                  <option key={item._id} value={item.name}>
-                    {item.name}
+                  <option key={item._id} value={item._id}>
+                    {item.categoryName}
                   </option>
                 ))}
               </select>
@@ -172,8 +184,8 @@ function Home() {
               >
                 <option value="">-- Select Category --</option>
                 {expenseCategory.map((item) => (
-                  <option key={item._id} value={item.name}>
-                    {item.name}
+                  <option key={item._id} value={item._id}>
+                    {item.categoryName}
                   </option>
                 ))}
               </select>
@@ -190,6 +202,7 @@ function Home() {
             </form>
           </div>
         </div>
+        {/*Income By Category Field */}
         <div className="income-expense-category">
           <h3 className="income-expense-category-h">Income by category</h3>
           <ol className="income-expense-category-ol">
@@ -200,6 +213,7 @@ function Home() {
             ))}
           </ol>
         </div>
+        {/*Expense By Category field */}
         <div className="income-expense-category">
           <h3 className="income-expense-category-h">Expense by category</h3>
           <ol className="income-expense-category-ol">

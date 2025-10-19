@@ -3,8 +3,9 @@ import mongoose from "mongoose";
 const expenseSchema = new mongoose.Schema(
   {
     selectedExpenseCategory: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CategoryVariable",
+      required:true,
     },
     expenseAmount: {
       type: Number,

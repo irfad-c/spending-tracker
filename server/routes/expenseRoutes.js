@@ -1,8 +1,8 @@
 import express from "express";
 import {
-  expenseCalculation,
+  postExpenseCalculation,
   getTotalExpense,
-  expenseByCategory
+  getExpenseByCategory
 } from "../controllers/expenseControllers.js";
 
 const router = express.Router();
@@ -11,6 +11,6 @@ const router = express.Router();
 router.get("/", getTotalExpense);
 
 // Add new expense
-router.post("/", expenseCalculation);
-router.get("/category", expenseByCategory);
+router.post("/", postExpenseCalculation);
+router.get("/category", getExpenseByCategory);
 export default router;
