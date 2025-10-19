@@ -4,7 +4,7 @@ const incomeSchema = new mongoose.Schema(
   {
     selectedIncomeCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "CategoryVariable",
+      ref: "Category",
       required: true,
     },
     incomeAmount: {

@@ -3,8 +3,15 @@ import ExpenseVariable from "../models/expense.js";
 
 export const getFullTransaction = async (req, res) => {
   try {
-    const incomeData = await IncomeVariable.find();
-    const expenseData = await ExpenseVariable.find();
+    /*"selectedIncomeCategory" → the field name in your schema that stores a reference (ObjectId)."CategoryName" → which field(s) you want from that referenced document. */
+    const incomeData = await IncomeVariable.find().populate(
+      "selectedIncomeCategory",
+      "categoryName"
+    );
+    const expenseData = await ExpenseVariable.find().populate(
+      "selectedExpenseCategory",
+      "categoryName"
+    );
 
     const transactionData = [...incomeData, ...expenseData].sort(
       (a, b) => b.createdAt - a.createdAt
@@ -13,7 +20,6 @@ export const getFullTransaction = async (req, res) => {
     res.json(transactionData);
   } catch (error) {
     console.error(error.message);
-
     return [];
   }
 };

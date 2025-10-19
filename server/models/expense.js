@@ -4,8 +4,8 @@ const expenseSchema = new mongoose.Schema(
   {
     selectedExpenseCategory: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "CategoryVariable",
-      required:true,
+      ref: "Category",
+      required: true,
     },
     expenseAmount: {
       type: Number,
