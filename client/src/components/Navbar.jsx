@@ -1,13 +1,20 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
 import "./Navbar.css";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   //intially isOpen will be false
   const [isOpen, setIsOpen] = useState(false);
   //when this function trigger value of isOpen swap between true and false
   const toggleMenu = () => setIsOpen(!isOpen);
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
   return (
     <nav className="navbar">
       {/* Logo */}
@@ -47,9 +54,8 @@ const Navbar = () => {
             Settings
           </Link>
         </li>
+        <button onClick={handleLogout}>Logout</button>
       </ul>
-
-    
     </nav>
   );
 };
