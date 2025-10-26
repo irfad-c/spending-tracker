@@ -7,7 +7,7 @@ import {
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Transactions from "./pages/Transactions";
-import { AuthProvider } from "./context/AuthContext.jsx";
+import { AuthProvider } from "./context/Context.jsx";
 import Categories from "./pages/Categories.jsx";
 import Settings from "./pages/Settings.jsx";
 import Login from "./pages/Login.jsx";
@@ -21,7 +21,7 @@ function App() {
     <>
       {/*client side routing using react router
       React Router just swaps the component shown inside <Routes>
-      React Router → Manages navigation between pages (URL → which component should render). */}
+      React Router → Manages navigation between pages (URL → which component should render).*/}
       <AuthProvider>
         <BrowserRouter>
           <Routes>
