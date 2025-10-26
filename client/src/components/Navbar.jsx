@@ -49,10 +49,7 @@ const Navbar = () => {
         </li>
       </ul>
 
-      {/* Actions */}
-      <div className="nav-actions">
-        <button className="nav-btn">Login</button>
-      </div>
+    
     </nav>
   );
 };
