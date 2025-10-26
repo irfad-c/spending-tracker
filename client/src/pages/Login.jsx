@@ -17,7 +17,10 @@ export default function Login() {
     e.preventDefault();
     try {
       // fetchAPI handles: baseURL, token, JSON, errors
-      const res = await fetchAPI("/api/auth/login", "POST", form);
+      const res = await fetchAPI("/api/auth/login", {
+        method: "POST",
+        body: form,
+      });
 
       // res.user and res.token come from backend response
       login({ ...res.user, token: res.token });
