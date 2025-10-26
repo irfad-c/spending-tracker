@@ -21,13 +21,12 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Spending Tracker API is running...");
 });
+
 app.use("/api/income", incomeRoutes);
 app.use("/api/expense", expenseRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/category", categoryRoutes);
-app.use("api/auth", authRoutes);
-
-
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
