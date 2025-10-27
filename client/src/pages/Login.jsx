@@ -23,6 +23,7 @@ export default function Login() {
       });
 
       // res.user and res.token come from backend response
+      //we are calling the login function and sharing the data to Context.js
       login({ ...res.user, token: res.token });
 
       navigate("/");

@@ -13,6 +13,8 @@ export const AuthProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
 
+  //this funcion is called inside Login.jsx
+  //so the data and token shared and save in the local storage.
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -29,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       if (stored?.token) {
         try {
           // Verify token using fetch wrapper
-          const res = await fetchAPI("/auth/verify");
+          const res = await fetchAPI("/api/auth/verify");
           // res.user comes from backend verify route response
           setUser({ ...res.user, token: stored.token });
         } catch {

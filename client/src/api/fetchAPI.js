@@ -2,7 +2,7 @@
 const BASE_URL = "http://localhost:5000";
 
 /*A reusable fetch wrapper that:
- 1. Reads token from localStorage
+1. Reads token from localStorage
 2. Automatically attaches it to Authorization header
 3. Sends request and returns JSON response*/
 
@@ -13,23 +13,26 @@ async function fetchAPI(
   headers is like a bag where we put things that describe our request.*/
   { method = "GET", body = null, headers = {} } = {}
 ) {
-  // Check if user is stored
   const storage = localStorage.getItem("user");
-  /**If the user is logged in, we take their token and automatically add it to:
+  /**we are adding token to Authorization
    Authorization: Bearer <token>
    This means no need to manually attach token inside every API call. */
 
   if (storage) {
     const user = JSON.parse(storage);
     if (user.token) {
-      /* This means we are adding a key named "Authorization" to the  headers object.Why add "Bearer " and a space?
-         Because this is how tokens must be formatted in HTTP:
-         Authorization: Bearer YOUR_TOKENThere must be a space between Bearer and the token.This is a standard rule (not our choice). */
+      /* This means we are adding a key named "Authorization" to the  headers object.
+      Why add "Bearer " and a space?
+      Because this is how tokens must be formatted in HTTP:
+      Authorization: Bearer YOUR_TOKEN 
+      There must be a space between Bearer and the token.This is a standard rule (not our choice). */
       headers["Authorization"] = "Bearer " + user.token;
     }
   }
 
   if (body) {
+    //data which is sendig is from frontend to backend called request body
+    //HTTP requests can include headers. Headers are like extra information packaged with the request.
     headers["Content-Type"] = "application/json";
     body = JSON.stringify(body);
   }
