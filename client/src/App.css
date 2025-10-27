@@ -1,0 +1,52 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f6f8fa;
+  margin: 0;
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+.brand {
+  font-weight: 700;
+}
+.links a {
+  margin-right: 10px;
+}
+.container {
+  padding: 20px;
+  max-width: 720px;
+  margin: 20px auto;
+}
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #0b74de;
+  color: white;
+  cursor: pointer;
+}
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+}
