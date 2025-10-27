@@ -1,0 +1,26 @@
+.card {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 24px;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+input {
+  display: flex;
+  width: 100%;
+  padding: 12px 14px;
+  margin: 12px 0;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background: #f8fafc;
+  font-size: 15px;
+  outline: none;
+  transition: border 0.25s ease, background 0.25s ease;
+}
+/* Focus effect for a premium feel */
+input:focus {
+  border-color: #0b74de; /* match your button color */
+  background: #ffffff; /* highlight active input */
+  box-shadow: 0 0 0 2px rgba(11, 116, 222, 0.15);
+}

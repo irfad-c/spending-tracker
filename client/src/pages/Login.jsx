@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import fetchAPI from "../api/fetchAPI";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./Login.css";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });

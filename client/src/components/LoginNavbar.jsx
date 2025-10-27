@@ -15,12 +15,12 @@ const LoginNavbar = () => {
     <>
       <nav className="nav">
         <div className="brand">
-          MERN Auth - This is present in LoginNavbar.jsx
+          MERN Auth 
         </div>
         <div className="links">
           {user ? (
             <>
-              <span>Hi, {user.name} This is present in LoginNavbar.jsx </span>
+              <span>Hi, {user.name}</span>
               <button onClick={handleLogout}>Logout</button>
             </>
           ) : (
