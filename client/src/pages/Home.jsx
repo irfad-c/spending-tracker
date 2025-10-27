@@ -203,6 +203,7 @@ function Home() {
           </div>
         </div>
         {/*Income By Category Field */}
+        <div className="category-wise">
         <div className="income-expense-category">
           <h3 className="income-expense-category-h">Income by category</h3>
           <ol className="income-expense-category-ol">
@@ -223,6 +224,7 @@ function Home() {
               </li>
             ))}
           </ol>
+        </div>
         </div>
       </div>
     </>
