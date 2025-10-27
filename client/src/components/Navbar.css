@@ -69,6 +69,20 @@
 .hamburger.open span:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
 }
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #025430; /* blue */
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: #2563eb; /* darker blue */
+}
 
 /* Mobile Responsive */
 @media (max-width: 768px) {

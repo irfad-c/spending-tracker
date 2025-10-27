@@ -54,7 +54,7 @@ const Navbar = () => {
             Settings
           </Link>
         </li>
-        <button onClick={handleLogout}>Logout</button>
+        <button className="btn" onClick={handleLogout}>Logout</button>
       </ul>
     </nav>
   );
