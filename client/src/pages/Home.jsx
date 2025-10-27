@@ -1,5 +1,6 @@
 import "./Home.css";
-import { useState, useEffect } from "react";
+import {  useState, useEffect } from "react";
+
 
 function Home() {
   const [incomeCategory, setIncomeCategory] = useState([]);
@@ -124,6 +125,7 @@ function Home() {
       .catch((err) => console.error(err));
   }
 
+
   return (
     <>
       <div className="entire-content">
@@ -224,6 +226,7 @@ function Home() {
             ))}
           </ol>
         </div>
+        
       </div>
     </>
   );
