@@ -7,7 +7,7 @@ import {
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Transactions from "./pages/Transactions";
-import { AuthProvider } from "./context/Context.jsx";
+import { AuthProvider } from "./context/AuthProvider.jsx";
 import Categories from "./pages/Categories.jsx";
 import Settings from "./pages/Settings.jsx";
 import Login from "./pages/Login.jsx";
