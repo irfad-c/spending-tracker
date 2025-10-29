@@ -1,98 +1,84 @@
-````markdown
-# 💰 Spending Tracker App (MERN)
+💰 Spending Tracker App (MERN)
 
-A full-stack MERN (MongoDB, Express, React, Node.js) application that helps users manage their personal finances.  
-Users can track income and expenses, view total balance, and check transaction history — all in a simple, responsive interface.
+A full-stack MERN (MongoDB, Express, React, Node.js) application that helps users track their personal expenses and income. It provides a clear summary of total balance, total income, and total expenses, along with a detailed transaction history.
 
----
 
-## 🚀 Features
+🚀 Features
 
-- Add income or expense transactions
-- Automatically calculates total income, total expense, and balance
-- View complete transaction history
-- Delete transactions
-- User authentication (register and login)
-- Data stored securely in MongoDB Atlas
-- Responsive UI built with React and Bootstrap
+* Add/Delete income and expense transactions
+* View total balance, total income, and total expenses
+* Category wise lists for income and expense.
+* View complete transaction history
+* Add/Delete income and expense categories
+* Delete transactions
+* Responsive design for desktop and mobile
+* Uses MongoDB Atlas for cloud data storage
 
----
 
-## 🧰 Tech Stack
+🛠️ Tech Stack
 
-**Frontend:** React, Context API,HTML,CSS
-**Backend:** Node.js, Express.js  
-**Database:** MongoDB Atlas
+Frontend: JSX,CSS,React
 
----
+Backend: Node.js, Express.js , Mongoose
 
-## ⚙️ Installation
+Database: MongoDB Atlas
 
-### 1. Clone the repository
 
-```bash
+⚙️ Installation and Setup
+
+1️⃣ Clone the repository
+
 git clone https://github.com/irfad-c/spending-tracker.git
+
 cd spending-tracker
-```
-````
 
-### 2. Install dependencies
+2️⃣ Install dependencies
 
-```bash
-cd backend
+For server:
+
+cd server
 npm install
 
-cd ../frontend
+For frontend:
+
+cd client
 npm install
-```
 
-### 3. Set up environment variables
 
-Create a `.env` file inside the **backend** folder and add:
+3️⃣ Set up environment variables
 
-```
+Create a .env file inside the backend folder and add:
+
 PORT=5000
-MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=your_secret_key
-```
 
-### 4. Run the app
+MONGO_URI=your_mongodb_connection_string
 
-```bash
-# Run backend
-cd backend
+JWT_SECRET=type_secret_key_here
+
+
+4️⃣ Run the app
+
+Start backend:
+
+npm run server
+
+
+Start frontend:
+
 npm start
 
-# Run frontend
-cd frontend
-npm start
-```
 
----
 
-## 🧾 Example Features in UI
 
-- Add/Delete new income or expense entries
-- Real-time total balance display
-- Add/Delete new categories
-- Transaction list with type and amount
-- Secure login/logout flow
-- User registration
 
----
 
-## 📄 License
 
-This project is licensed under the MIT License.
 
----
+📬 Contact
 
-## 👤 Author
+If you have suggestions or feedback, feel free to reach out:
 
-**Irfad C**
-MERN Stack Developer passionate about building practical, full-stack web applications.
+📧 irfadc500@email.com
 
-```
 
----
-```
+
