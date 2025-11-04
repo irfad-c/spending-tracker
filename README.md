@@ -1,4 +1,4 @@
-💰 Spending Tracker App (MERN)
+💰 Spending Tracker Web App (MERN)
 
 A full-stack MERN (MongoDB, Express, React, Node.js) application that helps users track their personal expenses and income. It provides a clear summary of total balance, total income, and total expenses, along with a detailed transaction history.
 
