@@ -41,10 +41,10 @@ router.post("/login", async (req, res) => {
     if (!isMatch)
       return res.status(400).json({ message: "Invalid credentials" });
     /**We create a token that contains { id: user._id } inside it.
-       We sign this token using process.env.JWT_SECRET.
-       This signing is what makes the token trustworthy.
-       No headers are used here yet.
-       At the login step, we just generate the token and send it to the frontend. */
+    We sign this token using process.env.JWT_SECRET.
+    This signing is what makes the token trustworthy.
+    No headers are used here yet.
+    At the login step, we just generate the token and send it to the frontend. */
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });

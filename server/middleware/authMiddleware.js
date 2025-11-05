@@ -13,12 +13,14 @@ export const authMiddleware = async (req, res, next) => {
   }
 
   try {
+    //jwt.verify() decodes the token and returns what was inside it — the { id: user._id } object
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     //here id we already defined in authRoutes.js when we loggged in
+    //select("-password") means “get all fields except password.”
     const user = await User.findById(decoded.id).select("-password");
 
     if (!user) return res.status(401).json({ message: "User not found" });
-
+    //attaches user info to req.user
     req.user = user;
     next();
   } catch (err) {

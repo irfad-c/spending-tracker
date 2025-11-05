@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
+  //when we refresh the page it shows loading for few second.If there is token we will not logged out.
   const [loading, setLoading] = useState(true);
 
   //this funcion is called inside Login.jsx
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
           // Verify token using fetch wrapper
           const res = await fetchAPI("/api/auth/verify");
           // res.user comes from backend verify route response
+          //It’s mainly used when your frontend reloads — to verify that the login session is still valid.
           setUser({ ...res.user, token: stored.token });
         } catch {
           logout();
