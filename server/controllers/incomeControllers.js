@@ -1,47 +1,30 @@
-import IncomeVariable from "../models/income.js";
+import IncomeVariable from "../models/income.js"; // 👈 use your Income model
 
-
+// @desc   Get total income
 export const getTotalIncome = async (req, res) => {
   try {
-    const result = await IncomeVariable.aggregate([
-      { $group: { _id: null, totalIncome: { $sum: "$incomeAmount" } } },
-    ]);
-    res.json({ totalIncome: result[0]?.totalIncome || 0 });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-//GET request for income by category calculation
-export const getIncomeByCategory = async (req, res) => {
-  try {
-    const result = await IncomeVariable.aggregate([
-      {
-        $lookup: {
-          from: "categories", // 👈 the collection name 
-          localField: "selectedIncomeCategory", // field in IncomeVariable
-          foreignField: "_id", // field in CategoryVariable
-          as: "categoryDetails", // result will be stored in this field
-        },
-      },
-      // Unwind the array (each lookup result is an array)
-      { $unwind: "$categoryDetails" },
-      // Group by category name instead of ID
-      {
-        $group: {
-          _id: "$categoryDetails.categoryName",
-          total: { $sum: "$incomeAmount" },
-        },
-      },
-    ]);
-
-    res.json(result);
+    const totalIncome = await calculateTotalIncome(req.user._id);
+    res.json({ totalIncome });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// @desc   total income calculation
+// Helper function to calculate total income
+async function calculateTotalIncome(userId) {
+  // aggregate() function always returns an array, even if it has only one object.
+  const result = await IncomeVariable.aggregate([
+    { $match: { userId } },
+    // _id: null means we don't want to group by any category
+    { $group: { _id: null, totalIncome: { $sum: "$incomeAmount" } } },
+  ]);
+  // result = [{ _id: null, totalIncome: 750 }]
+  // result[0] = { _id: null, totalIncome: 750 }
+  return result[0]?.totalIncome || 0;
+  // this will return a single number
+}
 
+// @desc   Add new income
 export const postIncomeCalculation = async (req, res) => {
   try {
     const { selectedIncomeCategory, incomeAmount } = req.body;
@@ -49,15 +32,44 @@ export const postIncomeCalculation = async (req, res) => {
     await IncomeVariable.create({
       selectedIncomeCategory,
       incomeAmount,
+      userId: req.user._id,
     });
-    const totalIncome = await IncomeVariable.aggregate([
-      { $group: { _id: null, totalIncome: { $sum: "$incomeAmount" } } },
-    ]);
+
+    const totalIncome = await calculateTotalIncome(req.user._id);
 
     res.status(201).json({
       message: "Income added successfully",
-      totalIncome: totalIncome[0]?.totalIncome || 0,
+      totalIncome,
     });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// @desc   Get income grouped by category
+export const getIncomeByCategory = async (req, res) => {
+  try {
+    const result = await IncomeVariable.aggregate([
+      { $match: { userId: req.user._id } },
+      {
+        $lookup: {
+          from: "categories", // 👈 the collection name in MongoDB
+          localField: "selectedIncomeCategory",
+          foreignField: "_id", // field in Category model
+          as: "categoryDetails", // result will be stored in this field
+        },
+      },
+      { $unwind: "$categoryDetails" }, // flatten the array
+      {
+        $group: {
+          _id: "$categoryDetails.categoryName", // group by category name
+          total: { $sum: "$incomeAmount" },
+        },
+      },
+      { $sort: { total: -1 } }, // optional: sort by total descending
+    ]);
+
+    res.json(result);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -31,12 +31,19 @@ function Home() {
       .catch((err) => console.error(err));
   }, []);
 
-  //Total Income
+
+
+   //Total Income
   useEffect(() => {
-    fetch("http://localhost:5000/api/income")
-      .then((res) => res.json())
-      .then((data) => setIncome(data.totalIncome))
-      .catch((err) => console.error(err));
+    const fetchTotalIncome = async () => {
+      try {
+        const data = await fetchAPI("/api/income");
+        setIncome(data.totalIncome);
+      } catch (err) {
+        console.error("Error fetching total expense", err.message);
+      }
+    };
+    fetchTotalIncome();
   }, []);
 
   //Total Expense
@@ -44,7 +51,6 @@ function Home() {
     const fetchTotalExpense = async () => {
       try {
         const data = await fetchAPI("/api/expense");
-
         setExpense(data.totalExpense);
       } catch (err) {
         console.error("Error fetching total expense", err.message);
@@ -68,43 +74,51 @@ function Home() {
     fetchExpenseByCategory();
   }, []);
 
-  const fetchIncomeByCategory = () => {
-    fetch("http://localhost:5000/api/income/category")
-      .then((res) => res.json())
-      .then((data) => {
-        const sorted = data.sort((a, b) => b.total - a.total);
-        setIncomeByCategory(sorted);
-      })
-      .catch((err) => console.error(err));
+    const fetchIncomeByCategory = async () => {
+    try {
+      const data = await fetchAPI("/api/income/category");
+      const sorted = data.sort((a, b) => b.total - a.total);
+      setIncomeByCategory(sorted);
+    } catch (error) {
+      console.error("Error fetching expenses by category:", error.message);
+    }
   };
+
+
   //empty dependency array.Run this only once, when the component is mounted (first time it appears on screen).
   useEffect(() => {
     fetchIncomeByCategory();
   }, []);
 
-  function addIncome(e) {
-    e.preventDefault();
-    if (!selectedIncomeCategory || !incomeAmount) {
-      alert("Please enter both category and income amount");
-      return;
-    }
-    fetch("http://localhost:5000/api/income", {
+
+
+async function addIncome(e) {
+  e.preventDefault();
+
+  if (!selectedIncomeCategory || !incomeAmount) {
+    alert("Please enter both category and income amount");
+    return;
+  }
+
+  try {
+    const data = await fetchAPI("/api/income", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+      body: {
         selectedIncomeCategory,
         incomeAmount: Number(incomeAmount),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIncome(data.totalIncome);
-        setIncomeAmount("");
-        setSelectedIncomeCategory("");
-        fetchIncomeByCategory();
-      })
-      .catch((err) => console.error(err));
+      },
+    });
+
+    setIncome(data.totalIncome);
+    setIncomeAmount("");
+    setSelectedIncomeCategory("");
+    fetchIncomeByCategory();
+  } catch (err) {
+    console.error("Error adding income:", err);
+    alert(err.message);
   }
+}
+
 
   async function addExpense(e) {
     e.preventDefault();
