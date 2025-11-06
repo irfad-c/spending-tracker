@@ -24,6 +24,7 @@ const expenseSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const ExpenseVariable = mongoose.model("Expense", expenseSchema);
+const ExpenseVariable =
+  mongoose.models.Expense || mongoose.model("Expense", expenseSchema);
 
 export default ExpenseVariable;

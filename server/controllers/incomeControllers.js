@@ -1,4 +1,4 @@
-import IncomeVariable from "../models/income.js"; // 👈 use your Income model
+import IncomeVariable from "../models/Income.js"; 
 
 // @desc   Get total income
 export const getTotalIncome = async (req, res) => {
