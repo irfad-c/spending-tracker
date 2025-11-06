@@ -1,6 +1,7 @@
 import IncomeVariable from "../models/income.js";
 import ExpenseVariable from "../models/expense.js";
 
+
 export const getFullTransaction = async (req, res) => {
   try {
     /*"selectedIncomeCategory" → the field name in your schema that stores a reference (ObjectId)."CategoryName" → which field(s) you want from that referenced document. */

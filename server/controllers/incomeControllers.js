@@ -1,5 +1,6 @@
 import IncomeVariable from "../models/income.js";
 
+
 export const getTotalIncome = async (req, res) => {
   try {
     const result = await IncomeVariable.aggregate([

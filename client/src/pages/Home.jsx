@@ -1,5 +1,6 @@
 import "./Home.css";
 import { useState, useEffect } from "react";
+import fetchAPI from "../api/fetchAPI";
 
 function Home() {
   const [incomeCategory, setIncomeCategory] = useState([]);
@@ -15,7 +16,7 @@ function Home() {
 
   const balance = income - expense;
 
-  //This for fetching category for  drop down menu
+  //This is for fetching category for  drop down menu
   useEffect(() => {
     fetch("http://localhost:5000/api/category/income")
       .then((res) => res.json())
@@ -40,21 +41,26 @@ function Home() {
 
   //Total Expense
   useEffect(() => {
-    fetch("http://localhost:5000/api/expense")
-      .then((res) => res.json())
-      .then((data) => setExpense(data.totalExpense))
-      .catch((err) => console.error(err));
+    const fetchTotalExpense = async () => {
+      try {
+        const data = await fetchAPI("/api/expense");
+
+        setExpense(data.totalExpense);
+      } catch (err) {
+        console.error("Error fetching total expense", err.message);
+      }
+    };
+    fetchTotalExpense();
   }, []);
 
-  const fetchExpenseByCategory = () => {
-    fetch("http://localhost:5000/api/expense/category")
-      .then((res) => res.json())
-      .then((data) => {
-        //a={_id="Food",total:5000} , b={_id:"Charity",total:1000}
-        const sorted = data.sort((a, b) => b.total - a.total);
-        setExpenseByCategory(sorted);
-      })
-      .catch((err) => console.error(err));
+  const fetchExpenseByCategory = async () => {
+    try {
+      const data = await fetchAPI("/api/expense/category");
+      const sorted = data.sort((a, b) => b.total - a.total);
+      setExpenseByCategory(sorted);
+    } catch (error) {
+      console.error("Error fetching expenses by category:", error.message);
+    }
   };
 
   //this code is needed to fetch the data at the beginning
@@ -100,28 +106,28 @@ function Home() {
       .catch((err) => console.error(err));
   }
 
-  function addExpense(e) {
+  async function addExpense(e) {
     e.preventDefault();
     if (!selectedExpenseCategory || !expenseAmount) {
       alert("Please enter both category and expense amount");
       return;
     }
-    fetch("http://localhost:5000/api/expense", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        selectedExpenseCategory,
-        expenseAmount: Number(expenseAmount),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setExpense(data.totalExpense);
-        setExpenseAmount("");
-        setSelectedExpenseCategory("");
-        fetchExpenseByCategory();
-      })
-      .catch((err) => console.error(err));
+    try {
+      const data = await fetchAPI("/api/expense", {
+        method: "POST",
+        body: {
+          selectedExpenseCategory,
+          expenseAmount: Number(expenseAmount),
+        },
+      });
+      setExpense(data.totalExpense);
+      setExpenseAmount("");
+      setSelectedExpenseCategory("");
+      fetchExpenseByCategory();
+    } catch (err) {
+      console.error("Error adding expense", err);
+      alert(err.message);
+    }
   }
 
   return (

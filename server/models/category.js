@@ -4,6 +4,7 @@ const CategorySchema = new mongoose.Schema(
   {
     categoryName: { type: String, required: true },
     type: { type: String, enum: ["income", "expense"], required: true },
+
   },
   { timestamps: true }
 );

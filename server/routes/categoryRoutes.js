@@ -9,6 +9,8 @@ import {
 } from "../controllers/categoryControllers.js";
 
 const router = express.Router();
+
+
 router.post("/income", postIncomeCategory);
 router.post("/expense", postExpenseCategory);
 router.get("/income", getIncomeCategory);
