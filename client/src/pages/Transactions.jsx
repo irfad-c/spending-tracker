@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
 import "./Transaction.css";
+import fetchAPI from "../api/fetchAPI";
 
 const Transactions = () => {
   const [transactions, setTransaction] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/transactions")
-      .then((res) => res.json())
-      .then((data) => setTransaction(data))
-      .catch((err) => console.error(err));
+    const fetchTransactions = async () => {
+      try {
+        const data = await fetchAPI("/api/transactions");
+        setTransaction(data);
+      } catch (err) {
+        console.error("Error fetching transactions:", err.message);
+      }
+    };
+    fetchTransactions();
   }, []);
 
   const handleDelete = async (type, id) => {
     try {
-      const res = await fetch(
-        `http://localhost:5000/api/transactions/${type}/${id}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (res.ok) {
-        setTransaction((prev) => prev.filter((item) => item._id !== id));
-      } else {
-        console.error("Failed to delete");
-      }
+      await fetchAPI(`/api/transactions/${type}/${id}`, {
+        method: "DELETE",
+      });
+      setTransaction((prev) => prev.filter((item) => item._id !== id));
+      console.log(`${type} transaction deleted successfully`);
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error deleting transaction:", error.message);
     }
   };
 
