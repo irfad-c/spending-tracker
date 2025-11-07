@@ -12,7 +12,7 @@ import Categories from "./pages/Categories.jsx";
 import Settings from "./pages/Settings.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import ProtectedRoute from "./components/protectedRoute.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import LoginNavbar from "./components/LoginNavbar.jsx";
 import ProtectedLayout from "./components/ProtectedLayout.jsx";
 

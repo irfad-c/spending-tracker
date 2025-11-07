@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://spending-tracker-4l2u.onrender.com";
 
 async function fetchAPI(
   endpoint,
