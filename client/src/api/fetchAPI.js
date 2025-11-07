@@ -80,6 +80,11 @@ adds this header automatically:
 Authorization: Bearer abcd123
 ✅ So, now your backend can recognize which user is making the request.
 
+headers commonly look like this
+headers:{
+"Content-Type":"application/json",
+Authorization:Bearer token}
+
 /**we are adding token to Authorization
    Authorization: Bearer <token>
    This means no need to manually attach token inside every API call. */

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Categories.module.css";
 import { useEffect } from "react";
+import fetchAPI from "../api/fetchAPI";
 
 const Categories = () => {
   const [incomeCategory, setIncomeCategory] = useState([]);
@@ -11,84 +12,90 @@ const Categories = () => {
 
   //GET-IncomeCategory
   useEffect(() => {
-    fetch("http://localhost:5000/api/category/income")
-      .then((res) => res.json())
-      .then((data) => setIncomeCategory(data))
-      .catch((err) => console.error(err.message));
+    const fetchIncomeCategory = async () => {
+      try {
+        const data = await fetchAPI("/api/category/income");
+        setIncomeCategory(data);
+      } catch (err) {
+        console.error("Cant fetch income category", err.message);
+      }
+    };
+    fetchIncomeCategory();
   }, []);
 
   //GET-ExpenseCategory
   useEffect(() => {
-    fetch("http://localhost:5000/api/category/expense")
-      .then((res) => res.json())
-      .then((data) => setExpenseCategory(data))
-      .catch((err) => console.error(err.message));
+    const fetchExpenseCategory = async () => {
+      try {
+        const data = await fetchAPI("/api/category/expense");
+        setExpenseCategory(data);
+      } catch (err) {
+        console.error("Can't fetch expense category:", err.message);
+      }
+    };
+
+    fetchExpenseCategory();
   }, []);
 
-  // Handle add income category
-  const addIncomeCategory = (e) => {
+  const addIncomeCategory = async (e) => {
     e.preventDefault();
     if (!newIncome || newIncome.trim() === "") {
       alert("Please enter category name");
       return;
     }
-    fetch("http://localhost:5000/api/category/income", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newIncome.trim() }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIncomeCategory((prev) => [...prev, data]);
-        setNewIncome("");
-        console.log(data);
-      })
-      .catch((err) => console.error(err));
+    try {
+      const data = await fetchAPI("/api/category/income", {
+        method: "POST",
+        body: { name: newIncome.trim() },
+      });
+      setIncomeCategory((prev) => [...prev, data]);
+      setNewIncome("");
+      console.log("Income category added:", data);
+    } catch (err) {
+      console.error("Error adding income category:", err.message);
+      alert(err.message);
+    }
   };
 
-  // Handle add expense category
-  const addExpenseCategory = (e) => {
+  const addExpenseCategory = async (e) => {
     e.preventDefault();
-    // logical OR — show alert if input empty
     if (!newExpense || newExpense.trim() === "") {
       alert("Please enter category name");
-      return; // stop execution if invalid input
+      return;
     }
-    fetch("http://localhost:5000/api/category/expense", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newExpense.trim() }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setExpenseCategory((prev) => [...prev, data]);
-        setNewExpense("");
-      })
-      .catch((err) => console.error("Error adding expense category:", err));
+    try {
+      const data = await fetchAPI("/api/category/expense", {
+        method: "POST",
+        body: { name: newExpense.trim() },
+      });
+      setExpenseCategory((prev) => [...prev, data]);
+      setNewExpense("");
+      console.log("Expense category added:", data);
+    } catch (err) {
+      console.error("Error adding expense category:", err.message);
+      alert(err.message);
+    }
   };
 
   const handleDelete = async (type, id) => {
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/category/${type}/${id}`,
-        { method: "DELETE" }
-      );
-      /*res.ok is a built-in property of the Response object returned by fetch() in JavaScript.
-      res.ok will be true if the HTTP status is in the range 200–299,
-meaning the request succeeded.*/
-      if (res.ok) {
-        if (type === "income") {
-          setIncomeCategory((prev) => prev.filter((item) => item._id !== id));
-        } else {
-          setExpenseCategory((prev) => prev.filter((item) => item._id !== id));
-        }
-      } else {
-        console.error("Failed to delete");
-      }
-    } catch (error) {
-      console.error("Error:", error);
+  try {
+    await fetchAPI(`/api/category/${type}/${id}`, {
+      method: "DELETE",
+    });
+
+    // Update UI after successful delete
+    if (type === "income") {
+      setIncomeCategory((prev) => prev.filter((item) => item._id !== id));
+    } else {
+      setExpenseCategory((prev) => prev.filter((item) => item._id !== id));
     }
-  };
+
+    console.log(`${type} category deleted successfully`);
+  } catch (error) {
+    console.error("Error deleting category:", error.message);
+  }
+};
+
 
   return (
     <>

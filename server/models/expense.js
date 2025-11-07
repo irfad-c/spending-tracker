@@ -15,10 +15,16 @@ const expenseSchema = new mongoose.Schema(
       type: String,
       default: "expense",
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
-const ExpenseVariable = mongoose.model("Expense", expenseSchema);
+const ExpenseVariable =
+  mongoose.models.Expense || mongoose.model("Expense", expenseSchema);
 
 export default ExpenseVariable;

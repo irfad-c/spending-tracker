@@ -2,17 +2,17 @@ import ExpenseVariable from "../models/expense.js";
 
 export const getTotalExpense = async (req, res) => {
   try {
-    const totalExpense = await calculateTotalExpense();
+    const totalExpense = await calculateTotalExpense(req.user._id);
     res.json({ totalExpense });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// helper function to calculate total expense
-async function calculateTotalExpense() {
+async function calculateTotalExpense(userId) {
   //aggregate() function always returns an array, even if it has only one object.
   const result = await ExpenseVariable.aggregate([
+    { $match: { userId } },
     //_id:null means we don't want to group by any category
     { $group: { _id: null, totalExpense: { $sum: "$expenseAmount" } } },
   ]);
@@ -27,14 +27,12 @@ async function calculateTotalExpense() {
 export const postExpenseCalculation = async (req, res) => {
   try {
     const { selectedExpenseCategory, expenseAmount } = req.body;
-
     await ExpenseVariable.create({
       selectedExpenseCategory,
       expenseAmount,
+      userId: req.user._id,
     });
-
-    const totalExpense = await calculateTotalExpense();
-
+    const totalExpense = await calculateTotalExpense(req.user._id);
     res.status(201).json({
       message: "Expense added successfully",
       totalExpense,
@@ -47,6 +45,7 @@ export const postExpenseCalculation = async (req, res) => {
 export const getExpenseByCategory = async (req, res) => {
   try {
     const result = await ExpenseVariable.aggregate([
+      { $match: { userId: req.user._id } },
       {
         $lookup: {
           from: "categories", // 👈 the collection name
