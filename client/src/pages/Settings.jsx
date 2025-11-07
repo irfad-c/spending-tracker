@@ -1,4 +1,4 @@
-import styles from "./settings.module.css";
+import styles from "./Settings.module.css";
 
 export default function Settings() {
   const settings = [
