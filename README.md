@@ -5,26 +5,42 @@ A full-stack MERN (MongoDB, Express, React, Node.js) application that helps user
 
 ## 🚀 Features
 
-* Add/Delete income and expense transactions
-* View total balance, total income, and total expenses
-* Category wise lists for income and expense.
-* View complete transaction history
-* Add/Delete income and expense categories
-* Delete transactions
-* Responsive design for desktop and mobile
-* Uses MongoDB Atlas for cloud data storage
+* View financial summary – Total balance, total income, and total expenses at a glance.
+* Category-based tracking – Separate lists for income and expenses.
+* Complete transaction history – Easily view, add, or delete any transaction.
+* Manage categories – Add or delete income and expense categories.
+* Secure user authentication – Implemented with JWT and password hashing.
+* Cloud database – Uses MongoDB Atlas for secure data storage.
+* Responsive design – Optimized for both desktop and mobile devices.
 
 
 ## 🛠️ Tech Stack
 
-Frontend: JSX,CSS,React
+Frontend: JSX,React,Context API,CSS (Responsive Design)
 
 Backend: Node.js, Express.js , Mongoose
 
-Database: MongoDB Atlas
+Database: MongoDB Atlas (NoSQL Cloud Database)
 
+Authentication: JSON Web Token (JWT), bcrypt.js (Password Hashing)
 
+Version Control: Git & GitHub
 
+Development Tools: Visual Studio Code, Postman, Nodemon
+
+## 💻 Screenshots
+
+### 🔐 Login Page
+<img width="1914" height="724" alt="Login" src="https://github.com/user-attachments/assets/4f9ef44d-8c78-453f-a31e-2a305add3b34" />
+
+### 🏠 Dashboard
+<img width="1883" height="880" alt="Home" src="https://github.com/user-attachments/assets/8ba3f897-c6f6-4f46-956e-5fb1cd38384a" />
+
+### 💰 Transactions
+<img width="1883" height="867" alt="Transactions" src="https://github.com/user-attachments/assets/917c9ea3-64a3-40b3-8310-dcf1427e9a4c" />
+
+### 📊 Categories
+<img width="1888" height="888" alt="Categories" src="https://github.com/user-attachments/assets/415cc00f-4881-4c31-943f-5d5e6319d3ec" />
 
 ## ⚙️ Installation and Setup
 
