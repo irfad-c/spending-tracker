@@ -40,6 +40,8 @@ export default function Register() {
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Name"
+            type="text"
+             autoComplete="name"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           required
@@ -47,6 +49,7 @@ export default function Register() {
         <input
           placeholder="Email"
           type="email"
+              autoComplete="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
@@ -54,6 +57,7 @@ export default function Register() {
         <input
           placeholder="Password"
           type="password"
+          autoComplete="new-password"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
