@@ -1,4 +1,4 @@
-import ExpenseVariable from "../models/expense.js";
+import ExpenseVariable from "../models/Expense.js";
 
 export const getTotalExpense = async (req, res) => {
   try {
