@@ -14,8 +14,19 @@ import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 await connectDB();
 const app = express();
-// Enable CORS for all routes
-app.use(cors());
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://trackincomes.netlify.app",
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
+
 // parse JSON body
 app.use(express.json());
 app.get("/", (req, res) => {
@@ -30,3 +41,22 @@ app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+/*
+Enable CORS for all routes
+
+app.use(cors()); 
+this is Equivalent to:
+app.use(
+  cors({
+    origin: "*",
+  })
+);
+
+This is the default / open configuration.
+It allows any origin (any website) to make requests to your backend.
+Any domain (even http://evil-site.com) can send requests.
+No credentials (cookies, authorization headers) will be shared by default.
+
+credentials: true, it allows cookies or Authorization headers to be sent and received.
+*/
