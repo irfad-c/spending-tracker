@@ -33,7 +33,7 @@ export default fetchAPI;
 
 /*
 A reusable fetch wrapper that:
-✅ Adds your base URL (http://localhost:5000)
+✅ Adds your base URL (https://spending-tracker-4l2u.onrender.com)
 ✅ Adds your token (if the user is already logged in)
 ✅ Converts your data to JSON
 ✅ Handles errors and response parsing (using await response.json())

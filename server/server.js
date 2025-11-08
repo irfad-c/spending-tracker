@@ -59,4 +59,10 @@ Any domain (even http://evil-site.com) can send requests.
 No credentials (cookies, authorization headers) will be shared by default.
 
 credentials: true, it allows cookies or Authorization headers to be sent and received.
+
+const PORT = process.env.PORT || 5000;
+
+✅ This is the correct way to handle both development and production.
+When running locally, .env provides PORT=5000, so your app runs at localhost:5000.
+When running on Render, it ignores your .env and uses the port Render assigns internally
 */

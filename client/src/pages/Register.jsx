@@ -15,7 +15,7 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/auth/register", {
+      const res = await fetch("https://spending-tracker-4l2u.onrender.com/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
