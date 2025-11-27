@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import fetchAPI from "../api/fetchAPI";
+import axiosClient from "../api/axiosInstance.js";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 import "./Login.css";
@@ -16,11 +16,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      //fetchAPI handles: baseURL, token, JSON, errors
-      const res = await fetchAPI("/api/auth/login", {
-        method: "POST",
-        body: form,
-      });
+      const res = await axiosClient.post("/api/auth/login", form);
       login({ ...res.user, token: res.token });
       navigate("/");
     } catch (err) {
@@ -35,7 +31,7 @@ export default function Login() {
         <input
           placeholder="Email"
           type="email"
-            autoComplete="email"
+          autoComplete="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required

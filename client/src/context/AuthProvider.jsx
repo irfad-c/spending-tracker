@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import fetchAPI from "../api/fetchAPI";
+import axiosClient from "../api/axiosInstance.js"
 import { AuthContext } from "./AuthContext";
 
 export const AuthProvider = ({ children }) => {
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }) => {
       if (stored?.token) {
         try {
           // Verify token using fetch wrapper
-          const res = await fetchAPI("/api/auth/verify");
+          const res = await axiosClient.get("/api/auth/verify");
           // res.user comes from backend verify route response
           //It’s mainly used when your frontend reloads — to verify that the login session is still valid.
           setUser({ ...res.user, token: stored.token });

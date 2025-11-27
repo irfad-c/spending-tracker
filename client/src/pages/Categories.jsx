@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Categories.module.css";
 import { useEffect } from "react";
-import fetchAPI from "../api/fetchAPI";
+import axiosClient from "../api/axiosInstance.js";
 
 const Categories = () => {
   const [incomeCategory, setIncomeCategory] = useState([]);
@@ -14,7 +14,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchIncomeCategory = async () => {
       try {
-        const data = await fetchAPI("/api/category/income");
+        const data = await axiosClient.get("/api/category/income");
         setIncomeCategory(data);
       } catch (err) {
         console.error("Cant fetch income category", err.message);
@@ -27,7 +27,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchExpenseCategory = async () => {
       try {
-        const data = await fetchAPI("/api/category/expense");
+        const data = await axiosClient.get("/api/category/expense");
         setExpenseCategory(data);
       } catch (err) {
         console.error("Can't fetch expense category:", err.message);
@@ -44,9 +44,8 @@ const Categories = () => {
       return;
     }
     try {
-      const data = await fetchAPI("/api/category/income", {
-        method: "POST",
-        body: { name: newIncome.trim() },
+      const { data } = await axiosClient.post("/api/category/income", {
+        name: newIncome.trim(),
       });
       setIncomeCategory((prev) => [...prev, data]);
       setNewIncome("");
@@ -64,9 +63,8 @@ const Categories = () => {
       return;
     }
     try {
-      const data = await fetchAPI("/api/category/expense", {
-        method: "POST",
-        body: { name: newExpense.trim() },
+      const { data } = await axiosClient.post("/api/category/expense", {
+        name: newExpense.trim(),
       });
       setExpenseCategory((prev) => [...prev, data]);
       setNewExpense("");
@@ -78,24 +76,21 @@ const Categories = () => {
   };
 
   const handleDelete = async (type, id) => {
-  try {
-    await fetchAPI(`/api/category/${type}/${id}`, {
-      method: "DELETE",
-    });
+    try {
+      await axiosClient.delete(`/api/category/${type}/${id}`);
 
-    // Update UI after successful delete
-    if (type === "income") {
-      setIncomeCategory((prev) => prev.filter((item) => item._id !== id));
-    } else {
-      setExpenseCategory((prev) => prev.filter((item) => item._id !== id));
+      // Update UI after successful delete
+      if (type === "income") {
+        setIncomeCategory((prev) => prev.filter((item) => item._id !== id));
+      } else {
+        setExpenseCategory((prev) => prev.filter((item) => item._id !== id));
+      }
+
+      console.log(`${type} category deleted successfully`);
+    } catch (error) {
+      console.error("Error deleting category:", error.message);
     }
-
-    console.log(`${type} category deleted successfully`);
-  } catch (error) {
-    console.error("Error deleting category:", error.message);
-  }
-};
-
+  };
 
   return (
     <>
