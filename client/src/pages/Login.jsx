@@ -13,7 +13,6 @@ export default function Login() {
   useEffect(() => {
     if (user) navigate("/");
   }, [user, navigate]);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -22,9 +21,7 @@ export default function Login() {
         method: "POST",
         body: form,
       });
-
       login({ ...res.user, token: res.token });
-
       navigate("/");
     } catch (err) {
       alert(err.message || "Login failed");

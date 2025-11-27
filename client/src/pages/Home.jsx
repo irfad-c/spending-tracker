@@ -101,12 +101,10 @@ function Home() {
 
   async function addIncome(e) {
     e.preventDefault();
-
     if (!selectedIncomeCategory || !incomeAmount) {
       alert("Please enter both category and income amount");
       return;
     }
-
     try {
       const data = await fetchAPI("/api/income", {
         method: "POST",
@@ -115,7 +113,6 @@ function Home() {
           incomeAmount: Number(incomeAmount),
         },
       });
-
       setIncome(data.totalIncome);
       setIncomeAmount("");
       setSelectedIncomeCategory("");
