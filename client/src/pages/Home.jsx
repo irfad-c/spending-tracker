@@ -52,7 +52,7 @@ function Home() {
         const { data } = await axiosClient.get("/api/income");
         setIncome(data.totalIncome);
       } catch (err) {
-        console.error("Error fetching total expense", err.message);
+        console.error("Error fetching total income", err.message);
         setIncome(0)
       }
     };
@@ -95,7 +95,7 @@ function Home() {
       const sorted = data.sort((a, b) => b.total - a.total);
       setIncomeByCategory(sorted);
     } catch (error) {
-      console.error("Error fetching expenses by category:", error.message);
+      console.error("Error fetching incomes by category:", error.message);
       setIncomeByCategory([])
     }
   };
