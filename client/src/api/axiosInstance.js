@@ -33,3 +33,20 @@ axiosClient.interceptors.response.use(
 
 export default axiosClient;
 
+/*
+use()method accept 2 functions
+1️⃣ First arrow function → handles success:
+(response) => response
+Meaning:
+If the API request succeeds
+Just return the response normally
+2️⃣ Second arrow function → handles errors:
+(error) => {
+  const message = error.response?.data?.message || "Request failed";
+  return Promise.reject(new Error(message));
+}
+Meaning:
+If the API fails
+Extract the error message from server
+Return your own custom Error 
+*/

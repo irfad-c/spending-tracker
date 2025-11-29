@@ -13,11 +13,13 @@ export default function Login() {
   useEffect(() => {
     if (user) navigate("/");
   }, [user, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axiosClient.post("/api/auth/login", form);
-      login({ ...res.user, token: res.token });
+      const { userData, token } = res.data;
+      login({ ...userData, token });
       navigate("/");
     } catch (err) {
       alert(err.message || "Login failed");
@@ -49,45 +51,3 @@ export default function Login() {
     </div>
   );
 }
-/* 
-res.user and res.token come from backend response (not directly after some stages happen at the fetchAPI function which is in fetchAPI.js)
-we are calling the login function and sharing the data to AuthProvider.jsx
-The ... (spread operator) copies all properties from res.user into a new object.Then that object we add new property called token
-
-Step-by-step example
-1️⃣ Backend sends this:
-res.json({
-  token: "abc123",
-  user: {
-    id: "1",
-    name: "Irfad",
-    email: "irfad@gmail.com"
-  }
-});
-So the backend response body (JSON) is:
-{
-  "token": "abc123",
-  "user": { "id": "1", "name": "Irfad", "email": "irfad@gmail.com" }
-}
-2️⃣ Inside your fetchAPI, you have:
-const data = await response.json();
-return data;
-That means the same JSON above is returned to the caller.
-3️⃣ In your handleSubmit
-const res = await fetchAPI("/api/auth/login", { method: "POST", body: form });
-Now after this line, res equals:
-{
-  token: "abc123",
-  user: { id: "1", name: "Irfad", email: "irfad@gmail.com" }
-}
-4️⃣ Then you use it:
-login({ ...res.user, token: res.token });
-That expands into:
-login({
-  id: "1",
-  name: "Irfad",
-  email: "irfad@gmail.com",
-  token: "abc123"
-});
-✅ So now login() receives all user info plus the token,
-and can save it to Context or localStorage for global use.*/
