@@ -26,6 +26,7 @@ function Home() {
         setIncomeCategory(data);
       } catch (err) {
         console.error("Error fetching income categories", err.message);
+        setIncomeCategory([])
       }
     };
     fetchIncomeCategory();
@@ -38,6 +39,7 @@ function Home() {
         setExpenseCategory(data);
       } catch (err) {
         console.error("Error fetching expense categories:", err.message);
+        setExpenseCategory([])
       }
     };
     fetchExpenseCategory();
@@ -51,6 +53,7 @@ function Home() {
         setIncome(data.totalIncome);
       } catch (err) {
         console.error("Error fetching total expense", err.message);
+        setIncome(0)
       }
     };
     fetchTotalIncome();
@@ -64,6 +67,7 @@ function Home() {
         setExpense(data.totalExpense);
       } catch (err) {
         console.error("Error fetching total expense", err.message);
+        setExpense(0)
       }
     };
     fetchTotalExpense();
@@ -76,6 +80,7 @@ function Home() {
       setExpenseByCategory(sorted);
     } catch (error) {
       console.error("Error fetching expenses by category:", error.message);
+      setExpenseByCategory([])
     }
   };
 
@@ -91,6 +96,7 @@ function Home() {
       setIncomeByCategory(sorted);
     } catch (error) {
       console.error("Error fetching expenses by category:", error.message);
+      setIncomeByCategory([])
     }
   };
 
