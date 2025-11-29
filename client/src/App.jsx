@@ -19,19 +19,13 @@ import ProtectedLayout from "./components/ProtectedLayout.jsx";
 function App() {
   return (
     <>
-      {/*client side routing using react router
-      React Router just swaps the component shown inside <Routes>
-      React Router → Manages navigation between pages (URL → which component should render).*/}
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            {/* Public Pages (Show Login Navbar)
-            Hey, render <LoginNavbar /> and then inside it, show either <Login /> or <Register /> where the <Outlet /> is */}
             <Route element={<LoginNavbar />}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>
-
             {/* Protected Pages */}
             <Route element={<ProtectedRoute />}>
               <Route element={<ProtectedLayout />}>
@@ -49,3 +43,14 @@ function App() {
 }
 
 export default App;
+
+/*
+client side routing using react router
+      React Router just swaps the component shown inside <Routes>
+      React Router → Manages navigation between pages (URL → which component should render).
+         Public Pages (Show Login Navbar)
+            Hey, render <LoginNavbar /> and then inside it, show either <Login /> or <Register /> where the <Outlet /> is 
+
+ ProtectedRoute is the parent route.
+ Home,Transactions... are child routes.F
+*/

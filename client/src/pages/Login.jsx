@@ -18,8 +18,9 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await axiosClient.post("/api/auth/login", form);
-      const { userData, token } = res.data;
-      login({ ...userData, token });
+      const { user, token } = res.data;
+      login({ ...user, token });
+      //calling the login function
       navigate("/");
     } catch (err) {
       alert(err.message || "Login failed");

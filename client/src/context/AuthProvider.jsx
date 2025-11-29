@@ -32,9 +32,9 @@ export const AuthProvider = ({ children }) => {
       if (stored?.token) {
         try {
           const res = await axiosClient.get("/api/auth/verify");
-          // res.user comes from backend verify route response
+          // res.data.user comes from backend verify route response
           //It’s mainly used when your frontend reloads — to verify that the login session is still valid.
-          const { user, token } = res.data;
+          const { user } = res.data;
           setUser({ ...user, token: stored.token });
         } catch {
           logout();
