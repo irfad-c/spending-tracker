@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Transaction.css";
-import fetchAPI from "../api/fetchAPI";
+import axiosClient from "../api/axiosInstance.js";
 
 const Transactions = () => {
   const [transactions, setTransaction] = useState([]);
@@ -8,7 +8,7 @@ const Transactions = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const data = await fetchAPI("/api/transactions");
+        const { data } = await axiosClient.get("/api/transactions");
         setTransaction(data);
       } catch (err) {
         console.error("Error fetching transactions:", err.message);
@@ -19,9 +19,7 @@ const Transactions = () => {
 
   const handleDelete = async (type, id) => {
     try {
-      await fetchAPI(`/api/transactions/${type}/${id}`, {
-        method: "DELETE",
-      });
+      await axiosClient.delete(`/api/transactions/${type}/${id}`);
       setTransaction((prev) => prev.filter((item) => item._id !== id));
       console.log(`${type} transaction deleted successfully`);
     } catch (error) {

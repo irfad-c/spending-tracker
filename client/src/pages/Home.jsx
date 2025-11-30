@@ -1,6 +1,7 @@
 import "./Home.css";
 import { useState, useEffect } from "react";
-import fetchAPI from "../api/fetchAPI";
+import axios from "axios";
+import axiosClient from "../api/axiosInstance.js";
 
 function Home() {
   const [incomeCategory, setIncomeCategory] = useState([]);
@@ -21,10 +22,11 @@ function Home() {
   useEffect(() => {
     const fetchIncomeCategory = async () => {
       try {
-        const data = await fetchAPI("/api/category/income");
+        const { data } = await axiosClient.get("/api/category/income");
         setIncomeCategory(data);
       } catch (err) {
         console.error("Error fetching income categories", err.message);
+        setIncomeCategory([])
       }
     };
     fetchIncomeCategory();
@@ -33,13 +35,13 @@ function Home() {
   useEffect(() => {
     const fetchExpenseCategory = async () => {
       try {
-        const data = await fetchAPI("/api/category/expense");
+        const { data } = await axiosClient.get("/api/category/expense");
         setExpenseCategory(data);
       } catch (err) {
         console.error("Error fetching expense categories:", err.message);
+        setExpenseCategory([])
       }
     };
-
     fetchExpenseCategory();
   }, []);
 
@@ -47,10 +49,11 @@ function Home() {
   useEffect(() => {
     const fetchTotalIncome = async () => {
       try {
-        const data = await fetchAPI("/api/income");
+        const { data } = await axiosClient.get("/api/income");
         setIncome(data.totalIncome);
       } catch (err) {
-        console.error("Error fetching total expense", err.message);
+        console.error("Error fetching total income", err.message);
+        setIncome(0)
       }
     };
     fetchTotalIncome();
@@ -60,10 +63,11 @@ function Home() {
   useEffect(() => {
     const fetchTotalExpense = async () => {
       try {
-        const data = await fetchAPI("/api/expense");
+        const { data } = await axiosClient.get("/api/expense");
         setExpense(data.totalExpense);
       } catch (err) {
         console.error("Error fetching total expense", err.message);
+        setExpense(0)
       }
     };
     fetchTotalExpense();
@@ -71,11 +75,12 @@ function Home() {
 
   const fetchExpenseByCategory = async () => {
     try {
-      const data = await fetchAPI("/api/expense/category");
+      const { data } = await axiosClient.get("/api/expense/category");
       const sorted = data.sort((a, b) => b.total - a.total);
       setExpenseByCategory(sorted);
     } catch (error) {
       console.error("Error fetching expenses by category:", error.message);
+      setExpenseByCategory([])
     }
   };
 
@@ -86,11 +91,12 @@ function Home() {
 
   const fetchIncomeByCategory = async () => {
     try {
-      const data = await fetchAPI("/api/income/category");
+      const { data } = await axiosClient.get("/api/income/category");
       const sorted = data.sort((a, b) => b.total - a.total);
       setIncomeByCategory(sorted);
     } catch (error) {
-      console.error("Error fetching expenses by category:", error.message);
+      console.error("Error fetching incomes by category:", error.message);
+      setIncomeByCategory([])
     }
   };
 
@@ -101,21 +107,15 @@ function Home() {
 
   async function addIncome(e) {
     e.preventDefault();
-
     if (!selectedIncomeCategory || !incomeAmount) {
       alert("Please enter both category and income amount");
       return;
     }
-
     try {
-      const data = await fetchAPI("/api/income", {
-        method: "POST",
-        body: {
-          selectedIncomeCategory,
-          incomeAmount: Number(incomeAmount),
-        },
+      const { data } = await axiosClient.post("/api/income", {
+        selectedIncomeCategory,
+        incomeAmount: Number(incomeAmount),
       });
-
       setIncome(data.totalIncome);
       setIncomeAmount("");
       setSelectedIncomeCategory("");
@@ -133,12 +133,9 @@ function Home() {
       return;
     }
     try {
-      const data = await fetchAPI("/api/expense", {
-        method: "POST",
-        body: {
-          selectedExpenseCategory,
-          expenseAmount: Number(expenseAmount),
-        },
+      const { data } = await axiosClient.post("/api/expense", {
+        selectedExpenseCategory,
+        expenseAmount: Number(expenseAmount),
       });
       setExpense(data.totalExpense);
       setExpenseAmount("");
