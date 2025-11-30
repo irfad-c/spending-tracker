@@ -20,7 +20,7 @@ export default function Login() {
       const res = await axiosClient.post("/api/auth/login", form);
       const { user, token } = res.data;
       login({ ...user, token });
-      //calling the login function
+      //calling the login function in the AuthProvider.jsx
       navigate("/");
     } catch (err) {
       alert(err.message || "Login failed");

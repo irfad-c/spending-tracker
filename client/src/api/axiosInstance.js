@@ -26,8 +26,8 @@ If server returns success (status 200, 201, 204 etc.)
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    const message = error.response?.data?.message || "Request failed";
-    return Promise.reject(new Error(message));
+    error.customMessage = error.response?.data?.message || "Request failed";
+    return Promise.reject(error);
   }
 );
 
