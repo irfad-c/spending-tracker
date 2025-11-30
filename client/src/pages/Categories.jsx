@@ -6,7 +6,6 @@ import axiosClient from "../api/axiosInstance.js";
 const Categories = () => {
   const [incomeCategory, setIncomeCategory] = useState([]);
   const [expenseCategory, setExpenseCategory] = useState([]);
-  // store input values separately
   const [newIncome, setNewIncome] = useState("");
   const [newExpense, setNewExpense] = useState("");
 
@@ -14,7 +13,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchIncomeCategory = async () => {
       try {
-        const data = await axiosClient.get("/api/category/income");
+        const {data} = await axiosClient.get("/api/category/income");
         setIncomeCategory(data);
       } catch (err) {
         console.error("Cant fetch income category", err.message);
@@ -27,7 +26,7 @@ const Categories = () => {
   useEffect(() => {
     const fetchExpenseCategory = async () => {
       try {
-        const data = await axiosClient.get("/api/category/expense");
+        const {data} = await axiosClient.get("/api/category/expense");
         setExpenseCategory(data);
       } catch (err) {
         console.error("Can't fetch expense category:", err.message);
@@ -85,7 +84,6 @@ const Categories = () => {
       } else {
         setExpenseCategory((prev) => prev.filter((item) => item._id !== id));
       }
-
       console.log(`${type} category deleted successfully`);
     } catch (error) {
       console.error("Error deleting category:", error.message);
