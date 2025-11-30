@@ -48,5 +48,19 @@ Just return the response normally
 Meaning:
 If the API fails
 Extract the error message from server
-Return your own custom Error 
+Return your own custom Error
+
+Interceptors = Functions that run automatically before a request is sent OR after a response comes back.
+
+🧩 Where do they run?
+✔ Request interceptor
+Runs before axios sends the request.
+✔ Response interceptor
+Runs after axios receives the response.
+
+🧠 Simple analogy
+Interceptors work like this:
+You → interceptor → server → interceptor → You
+First interceptor: modify request
+Second interceptor: clean/modify response 
 */
