@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css"
+import "./Login.css";
 
 export default function Register() {
   // Stores user input
@@ -15,14 +15,17 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch("https://spending-tracker-4l2u.onrender.com/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json(); 
+      const res = await fetch(
+        "https://spending-tracker-4l2u.onrender.com/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        }
+      );
+      const data = await res.json();
       if (!res.ok) {
         throw new Error(data.message || "Registration failed");
       }
@@ -40,8 +43,8 @@ export default function Register() {
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Name"
-            type="text"
-             autoComplete="name"
+          type="text"
+          autoComplete="name"
           value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
           required
@@ -49,7 +52,7 @@ export default function Register() {
         <input
           placeholder="Email"
           type="email"
-              autoComplete="email"
+          autoComplete="email"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required

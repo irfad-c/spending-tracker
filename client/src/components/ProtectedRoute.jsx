@@ -9,16 +9,3 @@ const ProtectedRoute = () => {
 
 export default ProtectedRoute;
 
-/*
-What is outlet
-
-**`<Outlet />` is a placeholder where child routes will be rendered.**
----
-🔥 Example to Understand It Clearly
-📌 Your ProtectedRoute:
-return user ? <Outlet /> : <Navigate to="/login" replace />;
-Meaning:
-* If the user **is logged in** → render whatever child route is inside ProtectedRoute
-* If user **not logged in** → redirect to login page
-So `<Outlet />` = *show the actual protected page here*.
-*/

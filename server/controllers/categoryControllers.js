@@ -77,15 +77,4 @@ export const deleteCategory = async (req, res) => {
   }
 };
 
-/*
-MongoDB’s deleteMany() method never throws an error when there are no matches.
-It just returns a result object telling you how many documents were deleted.
 
-Example:
-
-await IncomeVariable.deleteMany({ selectedIncomeCategory: "someExpenseCategoryId" });
-// returns { acknowledged: true, deletedCount: 0 }
-
-So even if it doesn’t find any income documents, it won’t crash.
-That’s why your code still “works” for both income and expense categories.
- */
