@@ -86,7 +86,7 @@ Note:
 
 Start backend:
 
-npm run server
+npm run dev
 
 
 Start frontend:
