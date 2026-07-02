@@ -98,7 +98,7 @@ npm start
 
 If you have suggestions or feedback, feel free to reach out:
 
-📧 irfadc500@email.com
+📧 irfadc2500@gmail.com
 
 
 
