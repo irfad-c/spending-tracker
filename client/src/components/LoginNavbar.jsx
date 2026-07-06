@@ -32,7 +32,7 @@ const LoginNavbar = () => {
         </div>
       </nav>
 
-      {/* 👇 This is where Login.jsx or Register.jsx will render */}
+      {/* This is where Login.jsx or Register.jsx will render */}
       <Outlet />
     </>
   );

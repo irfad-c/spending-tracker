@@ -6,7 +6,8 @@ const axiosClient = axios.create({
 });
 
 // Attach token automatically
-//config contains all request details(method,URL,headers)
+// config contains all request details(method,URL,headers)
+// Request interceptor
 axiosClient.interceptors.request.use((config) => {
   const storage = localStorage.getItem("user");
   if (storage) {
@@ -18,6 +19,7 @@ axiosClient.interceptors.request.use((config) => {
   return config;
 });
 
+// Response interceptor
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {

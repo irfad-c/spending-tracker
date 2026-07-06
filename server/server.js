@@ -25,7 +25,7 @@ app.use(
     origin: allowedOrigins,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
-  })
+  }),
 );
 
 // parse JSON body

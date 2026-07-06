@@ -22,7 +22,7 @@ export const getFullTransaction = async (req, res) => {
   }
 };
 
-export const deleteTransaction = async (req, res) => {
+export const deleteTransaction = async (req, res) => { 
   try {
     const { type, id } = req.params;
     const userId = req.user._id;

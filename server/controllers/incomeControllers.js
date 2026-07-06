@@ -46,14 +46,14 @@ export const postIncomeCalculation = async (req, res) => {
   }
 };
 
-// @desc   Get income grouped by category
+// @ Get income grouped by category
 export const getIncomeByCategory = async (req, res) => {
   try {
     const result = await IncomeVariable.aggregate([
       { $match: { userId: req.user._id } },
       {
         $lookup: {
-          from: "categories", // 👈 the collection name in MongoDB
+          from: "categories", // the collection name in MongoDB
           localField: "selectedIncomeCategory",
           foreignField: "_id", // field in Category model
           as: "categoryDetails", // result will be stored in this field

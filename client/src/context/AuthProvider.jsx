@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axiosClient from "../api/axiosInstance.js";
 import { AuthContext } from "./AuthContext";
 
-//useState() → Reads user data (from localStorage when app loads)
-//Here the state is whatever we stored in the localStorage.
+// useState() → Reads user data (from localStorage when app loads)
+// Here the state is whatever we stored in the localStorage.
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     try {
@@ -13,11 +14,11 @@ export const AuthProvider = ({ children }) => {
     }
   });
 
-  //when we refresh the page it shows loading for few second.If there is token we will not logged out.
+  // When we refresh the page it shows loading for few second.If there is token we will not logged out.
   const [loading, setLoading] = useState(true);
 
-  //this funcion is called inside Login.jsx
-  //so the data and token shared and save in the local storage.
+  // login funcion is called inside Login.jsx
+  // So the data and token shared and saved in the local storage.
   const login = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
@@ -39,7 +40,8 @@ export const AuthProvider = ({ children }) => {
       try {
         const res = await axiosClient.get("/api/auth/verify");
         // res.data.user comes from backend verify route response
-        //It’s mainly used when your frontend reloads — to verify that the login session is still valid.
+        // It’s mainly used when your frontend reloads — to verify that the login session is still valid.
+        // backend json stored in data propery.
         const { user } = res.data;
         setUser({ ...user, token: stored.token });
         setLoading(false);

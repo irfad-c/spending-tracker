@@ -22,11 +22,11 @@ const incomeSchema = new mongoose.Schema(
     },
   },
 
-  { timestamps: true }
+  { timestamps: true },
 );
 
+// If Income model exist it will return it.Otherwise create new Income model.
 const IncomeVariable =
   mongoose.models.Income || mongoose.model("Income", incomeSchema);
+
 export default IncomeVariable;
-
-

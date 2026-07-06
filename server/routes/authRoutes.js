@@ -58,7 +58,8 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
+// verify
+// 
 router.get("/verify", authMiddleware, async (req, res) => {
   res.json({ user: req.user });
 });

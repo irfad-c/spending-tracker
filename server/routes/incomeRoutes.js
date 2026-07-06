@@ -9,7 +9,7 @@ import { authMiddleware } from "../middleware/authMiddleware.js";
 const router = express.Router();
 router.use(authMiddleware);
 
-//here /api/income or /api/income/ will give getTotalIncome (GET request)
+// Here /api/income or /api/income/ will give getTotalIncome (GET request)
 router.get("/", getTotalIncome);
 router.get("/category", getIncomeByCategory);
 router.post("/", postIncomeCalculation);
